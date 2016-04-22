@@ -1,3 +1,6 @@
+var appjs = require('app')
+
+
 function connect(username) {
     console.log("Beginning connect");
     var server = require("net").createServer();  
@@ -33,4 +36,15 @@ function addRow(userName)
     tableBody = document.getElementsByTagName("tbody")[0];
     tableBody.appendChild(newUserName);
     tableBody.appendChild(newPlayButtonColumn);
+}
+
+function play_button_click() {
+
+
+}
+
+function main() {
+
+
+
 }
