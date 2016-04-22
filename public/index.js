@@ -1,5 +1,5 @@
 //index.js
-
+var lobbyjs = require('lobby');
 
 
 /*eslint-env node, browser*/

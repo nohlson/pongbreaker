@@ -39,12 +39,7 @@ function addRow(userName)
 }
 
 function play_button_click() {
-
-
-}
-
-function main() {
-
-
+    appjs.main()
+    window.open("app.html", '_blank');
 
 }
