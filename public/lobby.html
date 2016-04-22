@@ -1,10 +1,36 @@
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-<script src="lobby.js"></script>
-Username<input type="text" id="username"><br>
-<button onclick="connect(document.getElementById('username').value)">Connect</button>
-<table style="width:100%" id="userTable">
-  <tr>
-    <td>User1</td>
-    <td><button onclick="play_button_click()">Play</button>
-  </tr>
-</table>
+<html>
+	<head>
+		<title>Pong Breaker</title>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <link rel="stylesheet" href="stylesheets/style.css">
+	    <style>
+	      html, body {
+	        height: 100%;
+	        width: 100%;
+	        background-color: black;
+	        background-size: 100% 100%;
+	        background-repeat: no-repeat;
+	      }
+	      </style>
+
+	    <script src="lobby.js" type="text/javascript"></script>
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+	</head>
+
+	<body>
+
+
+		Username<input type="text" id="username"><br>
+		<button onclick="connect(document.getElementById('username').value)">Connect</button>
+		<table style="width:100%" id="userTable">
+		  <tr>
+		    <td>User1</td>
+		    <td><button onclick="play_button_click()">Play</button>
+		  </tr>
+		</table>
+	</body>
+
+</html>
