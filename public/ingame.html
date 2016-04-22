@@ -14,6 +14,7 @@
         background-repeat: no-repeat;
       }
       </style>
+      <script src="ingame.js" type="text/javascript"></script>
   </head>
   <body>
     <div>
@@ -35,12 +36,13 @@
 
 
     </tr>
+    <button onclick="play_button_click()" class="btn btn-primary btn-lg">resize</button>
 
     </table>
   </div>
 
   <div>
-    <canvas id="PlayerCanvas" height="500" width="500" style="background-color: black; border:1px solid white;">
+    <canvas id="playerCanvas" height="500" width="500" style="background-color: black; border:1px solid white;">
     </canvas>
   </div>
   </body>
