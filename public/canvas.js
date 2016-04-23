@@ -18,6 +18,8 @@ var topPaddleX = canvas.width/2;
 var balls;
 var bricks = [];
 
+var keys = [];
+
 var Canvas = function() {
     
     _canvasObj,
@@ -72,24 +74,29 @@ var Canvas = function() {
     
 }
 
-function handleArrowKeys(event) {
-    var key=event.which;
-    
-    switch(key){
-    case 37:  // left key
-	
+function drawPaddles() {
+    var context = canvas.getContext('2d');
+
+    //Left arrow key
+    if (keys[37]) {
         if (botPaddleX > 0) {
-            botPaddleX -= 10;
+            botPaddleX -= 5;
 	}
-        break;
-
-    case 39:  // right key
-
+    } else if (keys[39]) { //Right arrow key (defaults to left if both pressed)
         if (botPaddleX + botPaddleWidth < canvas.width) {
-            botPaddleX += 10;
+            botPaddleX += 5;
 	}
-        break;
     }
+
+    //Draw bottom paddle
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#FF0000";
+    context.beginPath();
+    context.fillRect(botPaddleX, canvas.height - paddleHeight, botPaddleWidth, paddleHeight);
+
+    //Draw top paddle
+    context.beginPath();
+    context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
 }
 
 function setupGame() {
@@ -186,18 +193,7 @@ function generateBricks() {
 }
 
 function redrawCanvas() {
-    var context = canvas.getContext('2d');
-
-    //Draw bottom paddle
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "#FF0000";
-    context.beginPath();
-    context.fillRect(botPaddleX, canvas.height - paddleHeight, botPaddleWidth, paddleHeight);
-
-    //Draw top paddle
-    context.beginPath();
-    context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
-
+    drawPaddles();
     balls.forEach(function(ball) {
     	moveBall(ball);
 	drawBall(ball);
