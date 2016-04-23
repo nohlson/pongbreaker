@@ -32,8 +32,8 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 });
 */
 
-http.listen(3000, function() {
-    console.log('listening on *:3000');
+http.listen(appEnv.port, function() {
+    console.log('listening on *:' + appEnv.port);
 });
 
 io.on('connection', function(socket) {
