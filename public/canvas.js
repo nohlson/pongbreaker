@@ -4,10 +4,13 @@ var canvas = document.getElementById("playerCanvas");
 var botPaddleWidth = 15;
 var topPaddleWidth = 15;
 
+var ballRadius = 2;
 var paddleHeight = 5;
 
 var botPaddleX = 0;
 var topPaddleX = 0;
+
+var balls;
 
 var Canvas = function() {
     
@@ -70,19 +73,36 @@ function handleArrowKeys(event) {
     case 37:  // left key
 	
         if (botPaddleX > 0) {
-            botPaddleX -= 5;
+            botPaddleX -= 10;
 	}
         break;
 
     case 39:  // right key
 
         if (botPaddleX + botPaddleWidth < canvas.width) {
-            botPaddleX += 5;
+            botPaddleX += 10;
 	}
         break;
     }
+}
 
-    redrawCanvas();
+function setupGame() {
+    var topBall = {x: canvas.width/2, y: 15, xSpeed: 2, ySpeed: 2};
+    var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 2, ySpeed: -2};
+    balls = [topBall, botBall];
+    setInterval(redrawCanvas, 50);
+}
+
+function drawBall(ball) {
+    var context = canvas.getContext('2d');
+
+    context.beginPath();
+    context.arc(ball.x, ball.y, ballRadius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'green';
+    context.fill();
+//    context.lineWidth = 5;
+//    context.strokeStyle = '#003300';
+//    context.stroke();
 }
 
 function redrawCanvas() {
@@ -97,5 +117,11 @@ function redrawCanvas() {
     //Draw top paddle
     context.beginPath();
     context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
-    
+
+    for (var i = 0; i < balls.length; i++) {
+	var ball = balls[i];
+	ball.x += ball.xSpeed;
+	ball.y += ball.ySpeed;
+	drawBall(ball);
+    }
 }
