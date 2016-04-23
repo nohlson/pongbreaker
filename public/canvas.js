@@ -1,7 +1,7 @@
 /*eslint-env browser */
 var Canvas = function() {
-	
-	_canvasObj,
+    
+    _canvasObj,
     _canvasCtx,
     WIDTH,    
     HEIGHT,
@@ -9,9 +9,9 @@ var Canvas = function() {
     canvasMaxX,
     canvasMinY,
     canvasMaxY;
-	
-	
-	// right
+    
+    
+    // right
     this.player1 = {
         x : 0,
         y : 0
@@ -21,8 +21,8 @@ var Canvas = function() {
         x : 0,
         y : 0
     },
-	
-	_setLimits = function () {
+    
+    _setLimits = function () {
         canvasMinX = _canvasObj.offsetLeft;
         canvasMaxX = canvasMinX + _canvasObj.width;
         canvasMinY = _canvasObj.offsetTop;
@@ -30,19 +30,19 @@ var Canvas = function() {
     }
     
     function clearCanvas() {
-		_canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-	}
+	_canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+    }
     
     
     
-    this.draw() = funciton(){
+    this.draw() = function(){
     	//Draw everything
     	
     	
     }
     
-	
-	_canvasObj = document.getElementById('playerCanvas');
+    
+    _canvasObj = document.getElementById('playerCanvas');
     WIDTH = _canvasObj.width;
     HEIGHT = _canvasObj.height;
 
@@ -50,5 +50,5 @@ var Canvas = function() {
 
     this.obj = _canvasObj;
     this.ctx = _canvasCtx;
-	
+    
 }
