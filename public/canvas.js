@@ -100,11 +100,30 @@ function drawPaddles() {
 }
 
 function setupGame() {
+    resetGame();
+    setInterval(redrawCanvas, 1000/fps);
+}
+
+function resetGame() {
+    botPaddleWidth = 15;
+    topPaddleWidth = 15;
+
+    ballRadius = 2;
+    paddleHeight = 5;
+
+    brickHeight = 5;
+    brickWidth = 10;
+
+
+    botPaddleX = canvas.width/2;
+    topPaddleX = canvas.width/2;
+
+    bricks = [];
+    keys = [];
+    
     var topBall = {x: canvas.width/2, y: 15, xSpeed: 2, ySpeed: 2};
     var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 2, ySpeed: -2};
     balls = [topBall, botBall];
-   
-    setInterval(redrawCanvas, 1000/fps);
     generateBricks();
 }
 
@@ -149,17 +168,24 @@ function moveBall(ball) {
 	ball.xSpeed *= -1;
     }
 
+    //Handle hitting a brick
     for (var i = 0; i < bricks.length; i++) {
 	var brick = bricks[i];
 	if (ball.y + ballRadius >= brick.y && ball.y - ballRadius <= brick.y + brickHeight) {
 	    if (ball.x + ballRadius >= brick.x && ball.x - ballRadius <= brick.x + brickWidth) {
-		
-		console.log("Hit brick");
 		ball.ySpeed *= -1;
 		bricks.splice(i--, 1);
 		break;
 	    }
 	}
+    }
+
+    if (ball.y - ballRadius < 0) {
+	console.log("Bottom wins");
+	resetGame();
+    } else if (ball.y + ballRadius > canvas.height) {
+	console.log("Top wins");
+	resetGame();
     }
 }
 
