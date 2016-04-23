@@ -7,8 +7,8 @@ var topPaddleWidth = 15;
 var ballRadius = 2;
 var paddleHeight = 5;
 
-var botPaddleX = 0;
-var topPaddleX = 0;
+var botPaddleX = canvas.width/2;
+var topPaddleX = canvas.width/2 + 15;
 
 var balls;
 
@@ -100,9 +100,39 @@ function drawBall(ball) {
     context.arc(ball.x, ball.y, ballRadius, 0, 2 * Math.PI, false);
     context.fillStyle = 'green';
     context.fill();
-//    context.lineWidth = 5;
-//    context.strokeStyle = '#003300';
-//    context.stroke();
+}
+
+function moveBall(ball) {
+    ball.x += ball.xSpeed;
+    ball.y += ball.ySpeed;
+
+    //Handle bottom paddle
+    if (ball.y + ballRadius > canvas.height - paddleHeight) {
+	if (ball.x >= botPaddleX && ball.x <= botPaddleX + botPaddleWidth) {
+	    ball.y = canvas.height - paddleHeight - ballRadius;
+	    ball.ySpeed *= -1;
+	}
+    }
+
+    //Handle right wall
+    if (ball.x + ballRadius >= canvas.width) {
+	ball.x = canvas.width - ballRadius;
+	ball.xSpeed *= -1;
+    }
+
+    //Handle top paddle
+    if (ball.y - ballRadius <= paddleHeight) {
+	if (ball.x >= topPaddleX && ball.x <= topPaddleX + topPaddleWidth) {
+	    ball.y = paddleHeight + ballRadius;
+	    ball.ySpeed *= -1;
+	}
+    }
+
+    //Handle left wall
+    if (ball.x - ballRadius <= 0) {
+	ball.x = ballRadius;
+	ball.xSpeed *= -1;
+    }
 }
 
 function redrawCanvas() {
@@ -120,8 +150,7 @@ function redrawCanvas() {
 
     for (var i = 0; i < balls.length; i++) {
 	var ball = balls[i];
-	ball.x += ball.xSpeed;
-	ball.y += ball.ySpeed;
+	moveBall(ball);
 	drawBall(ball);
     }
 }
