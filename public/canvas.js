@@ -1,24 +1,50 @@
 /*eslint-env browser */
 var canvas = document.getElementById("playerCanvas");
 
-var botPaddleWidth = 15;
-var topPaddleWidth = 15;
+var botPaddleWidth;
+var topPaddleWidth;
 
 var fps = 30;
-var ballRadius = 2;
-var paddleHeight = 5;
+var ballRadius;
+var paddleHeight;
+var paddleSpeed;
 
-var brickHeight = 5;
-var brickWidth = 10;
+var brickHeight;
+var brickWidth;
 
 
-var botPaddleX = canvas.width/2;
-var topPaddleX = canvas.width/2;
+var botPaddleX;
+var topPaddleX;
 
 var balls;
 var bricks = [];
 
-var keys = [];
+var keys = []
+
+function resetGame() {
+    botPaddleWidth = 35;
+    topPaddleWidth = 35;
+
+    ballRadius = 5;
+    paddleHeight = 10;
+
+    brickHeight = 10;
+    brickWidth = 30;
+
+
+    botPaddleX = canvas.width/2;
+    topPaddleX = canvas.width/2;
+
+    bricks = [];
+    keys = [];
+
+    paddleSpeed = 8;
+    
+    var topBall = {x: canvas.width/2, y: 15, xSpeed: 5, ySpeed: 5};
+    var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 5, ySpeed: -5};
+    balls = [topBall, botBall];
+    generateBricks();
+}
 
 var Canvas = function() {
     
@@ -80,11 +106,11 @@ function drawPaddles() {
     //Left arrow key
     if (keys[37]) {
         if (botPaddleX > 0) {
-            botPaddleX -= 5;
+            botPaddleX -= paddleSpeed;
 	}
     } else if (keys[39]) { //Right arrow key (defaults to left if both pressed)
         if (botPaddleX + botPaddleWidth < canvas.width) {
-            botPaddleX += 5;
+            botPaddleX += paddleSpeed;
 	}
     }
 
@@ -102,29 +128,6 @@ function drawPaddles() {
 function setupGame() {
     resetGame();
     setInterval(redrawCanvas, 1000/fps);
-}
-
-function resetGame() {
-    botPaddleWidth = 15;
-    topPaddleWidth = 15;
-
-    ballRadius = 2;
-    paddleHeight = 5;
-
-    brickHeight = 5;
-    brickWidth = 10;
-
-
-    botPaddleX = canvas.width/2;
-    topPaddleX = canvas.width/2;
-
-    bricks = [];
-    keys = [];
-    
-    var topBall = {x: canvas.width/2, y: 15, xSpeed: 2, ySpeed: 2};
-    var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 2, ySpeed: -2};
-    balls = [topBall, botBall];
-    generateBricks();
 }
 
 function drawBall(ball) {
@@ -201,7 +204,7 @@ function drawBrick(brick) {
 }
 
 function generateBricks() {
-    var minBrickY = 60;
+    var minBrickY = 220;
     var maxBrickY = canvas.height - minBrickY;
 
     var currentBrickX = 0;
