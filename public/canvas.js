@@ -4,13 +4,19 @@ var canvas = document.getElementById("playerCanvas");
 var botPaddleWidth = 15;
 var topPaddleWidth = 15;
 
+var fps = 30;
 var ballRadius = 2;
 var paddleHeight = 5;
 
+var brickHeight = 5;
+var brickWidth = 10;
+
+
 var botPaddleX = canvas.width/2;
-var topPaddleX = canvas.width/2 + 15;
+var topPaddleX = canvas.width/2;
 
 var balls;
+var bricks = [];
 
 var Canvas = function() {
     
@@ -90,7 +96,9 @@ function setupGame() {
     var topBall = {x: canvas.width/2, y: 15, xSpeed: 2, ySpeed: 2};
     var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 2, ySpeed: -2};
     balls = [topBall, botBall];
-    setInterval(redrawCanvas, 50);
+   
+    setInterval(redrawCanvas, 1000/fps);
+    generateBricks();
 }
 
 function drawBall(ball) {
@@ -135,6 +143,35 @@ function moveBall(ball) {
     }
 }
 
+function drawBrick(brick) {
+    var context = canvas.getContext('2d');
+    context.fillStyle = "#00FF00";
+    context.strokeStyle = "#000000";
+    context.beginPath();
+    context.lineWidth = 0.5;
+    context.rect(brick.x, brick.y, brickWidth, brickHeight);
+    context.stroke();
+    context.fill()
+}
+
+function generateBricks() {
+    var minBrickY = 60;
+    var maxBrickY = canvas.height - minBrickY;
+
+    var currentBrickX = 0;
+    var currentBrickY = minBrickY;
+    while (currentBrickY + brickHeight <= maxBrickY) {
+	while (currentBrickX + brickWidth <= canvas.width) {
+	    var newBrick = {x: currentBrickX, y: currentBrickY};
+	    drawBrick(newBrick);
+	    currentBrickX += brickWidth;
+	    bricks.push(newBrick);
+	}
+	currentBrickX = 0;
+	currentBrickY += brickHeight;
+    }
+}
+
 function redrawCanvas() {
     var context = canvas.getContext('2d');
 
@@ -148,9 +185,12 @@ function redrawCanvas() {
     context.beginPath();
     context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
 
-    for (var i = 0; i < balls.length; i++) {
-	var ball = balls[i];
-	moveBall(ball);
+    balls.forEach(function(ball) {
+    	moveBall(ball);
 	drawBall(ball);
-    }
+    });
+
+    bricks.forEach(function(brick) {
+	drawBrick(brick);
+    });
 }
