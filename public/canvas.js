@@ -141,6 +141,19 @@ function moveBall(ball) {
 	ball.x = ballRadius;
 	ball.xSpeed *= -1;
     }
+
+    for (var i = 0; i < bricks.length; i++) {
+	var brick = bricks[i];
+	if (ball.y + ballRadius >= brick.y && ball.y - ballRadius <= brick.y + brickHeight) {
+	    if (ball.x + ballRadius >= brick.x && ball.x - ballRadius <= brick.x + brickWidth) {
+		
+		console.log("Hit brick");
+		ball.ySpeed *= -1;
+		bricks.splice(i--, 1);
+		break;
+	    }
+	}
+    }
 }
 
 function drawBrick(brick) {
