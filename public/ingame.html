@@ -7,50 +7,54 @@
     <link rel="stylesheet" href="stylesheets/style.css">
     <style>
       html, body {
-        height: 100%;
-        width: 100%;
-        background-color: gray;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
+      height: 100%;
+      width: 100%;
+      background-color: gray;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
       }
-      </style>
+    </style>
+    <script src="canvas.js"></script>
   </head>
-  <body>
+  <script>
+    window.addEventListener("keydown", handleArrowKeys, true);
+  </script>
+  <body onLoad="redrawCanvas()">
     <div>
       <table style="width=30%">
         <tr>
 
           <th>
-          <label id = "lblScore">Left: 0 Right: 0</label>
+            <label id = "lblScore">Left: 0 Right: 0</label>
           </th>
           <th>
-      <label id = "lblGameStatus"><strong></strong></label>
-    </th>
+	    <label id = "lblGameStatus"><strong></strong></label>
+	  </th>
 
           <th>
-      <label id = "lblRoundInfo"><strong>Connecting...</strong></label>
-    </th>
-    </tr>
+	    <label id = "lblRoundInfo"><strong>Connecting...</strong></label>
+	  </th>
+	</tr>
 
-    </table>
-  </div>
-  	<style>
-	canvas {
-    	padding-left: 0;
-  	  	padding-right: 0;
-   	 	margin-left: auto;
-   	 	margin-right: auto;
-    	display: block;
-    	width: 80%;
-    	height: 60%;
-	}
-	</style>
-  <div>
-    <canvas id="playerCanvas" style="background-color: black; border:1px solid white;">
-    </canvas>
-  </div>
-  
-  <script type="text/javascript" src="canvas.js"></script>
+      </table>
+    </div>
+    <style>
+      canvas {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      width: 80%;
+      height: 60%;
+      }
+    </style>
+    <div>
+      <canvas id="playerCanvas" style="background-color: black; border:1px solid white;">
+      </canvas>
+    </div>
+    
+    <script type="text/javascript" src="canvas.js"></script>
   </body>
 
 </html>

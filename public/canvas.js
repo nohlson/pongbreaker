@@ -1,4 +1,14 @@
 /*eslint-env browser */
+var canvas = document.getElementById("playerCanvas");
+
+var botPaddleWidth = 15;
+var topPaddleWidth = 15;
+
+var paddleHeight = 5;
+
+var botPaddleX = 0;
+var topPaddleX = 0;
+
 var Canvas = function() {
     
     _canvasObj,
@@ -50,5 +60,42 @@ var Canvas = function() {
 
     this.obj = _canvasObj;
     this.ctx = _canvasCtx;
+    
+}
+
+function handleArrowKeys(event) {
+    var key=event.which;
+    
+    switch(key){
+    case 37:  // left key
+	
+        if (botPaddleX > 0) {
+            botPaddleX -= 5;
+	}
+        break;
+
+    case 39:  // right key
+
+        if (botPaddleX + botPaddleWidth < canvas.width) {
+            botPaddleX += 5;
+	}
+        break;
+    }
+
+    redrawCanvas();
+}
+
+function redrawCanvas() {
+    var context = canvas.getContext('2d');
+
+    //Draw bottom paddle
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#FF0000";
+    context.beginPath();
+    context.fillRect(botPaddleX, canvas.height - paddleHeight, botPaddleWidth, paddleHeight);
+
+    //Draw top paddle
+    context.beginPath();
+    context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
     
 }
