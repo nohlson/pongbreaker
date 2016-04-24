@@ -74,7 +74,6 @@ function drawPaddles() {
         } else {
        		if (topPaddleX > 0) {
             	topPaddleX -= paddleSpeed;
-        	
         	}
 
 		}
@@ -107,7 +106,7 @@ function drawPaddles() {
 }
 
 function setupGame() {
-	playerID = 'p1';
+	playerID = 'p2';
     resetGame();
     setInterval(redrawCanvas, 1000/fps);
     
