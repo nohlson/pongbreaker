@@ -71,18 +71,22 @@ function drawPaddles() {
     	if (playerID == 'p2') {
         	if (botPaddleX > 0) {
             	botPaddleX -= paddleSpeed;
+        	}
+
         } else {
        		if (topPaddleX > 0) {
             	topPaddleX -= paddleSpeed;
         	}
 
 		}
-	}
+	
 
     } else if (keys[39]) { //Right arrow key (defaults to left if both pressed)
     	if (playerID == 'p2'){
         	if (botPaddleX + botPaddleWidth < canvas.width) {
             	botPaddleX += paddleSpeed;
+        	}
+
         } else {
         	if (topPaddleX + topPaddleWidth < canvas.width) {
             	topPaddleX += paddleSpeed;
@@ -91,7 +95,7 @@ function drawPaddles() {
 
 		}
    	 }
-	}
+	
 
 
     //Draw bottom paddle
