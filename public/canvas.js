@@ -102,8 +102,8 @@ function drawPaddles() {
 }
 
 function setupGame() {
-	resetGame();
-	setInterval(redrawCanvas, 1000/fps);
+    resetGame();
+    setInterval(redrawCanvas, 1000/fps);
     
 }
 
