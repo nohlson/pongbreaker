@@ -38,6 +38,9 @@ http.listen(appEnv.port, function() {
 
 io.on('connection', function(socket) {
     console.log('A user connected');
+    socket.on('newuserconnect', function(data)) {
+    	console.log('Username: ' + data.user)
+    }
     socket.on('disconnect', function() {
 	console.log('User disconnected');
     });
