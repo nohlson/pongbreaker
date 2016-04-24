@@ -1,12 +1,4 @@
-function connect(username) {
-    console.log("Beginning connect");
 
-    var socket = io();
-    var username = document.getElementById("username").value
-    socket.emit("newuserconnect", {user: username});
-   
-    console.log("Finished connect");
-}
 
 function addRow(userName)
 {
