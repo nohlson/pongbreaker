@@ -75,6 +75,10 @@ th, td {
 	width: 30%;
 }
 
+#loadingimage {
+	visibility: hidden;
+}
+
 pre {
 	padding: 0;
 	margin: 0;
