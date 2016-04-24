@@ -21,10 +21,10 @@ var bricks = [];
 
 var keys = [];
 
-var STARTED = false,
-MATCH_POINTS = 3,
+var STARTED = false;
+var MATCH_POINTS = 3;
 
-scores = {
+var scores = {
 	p1: {
             board: document.getElementById("Top"),
             points: 0
@@ -35,7 +35,7 @@ scores = {
         }
     };
     
-    playerID;
+var playerID;
 
 function resetGame() {
     botPaddleWidth = 35;
@@ -60,6 +60,7 @@ function resetGame() {
     var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 5, ySpeed: -5};
     balls = [topBall, botBall];
     generateBricks();
+    
 }
 
 function drawPaddles() {
@@ -74,9 +75,11 @@ function drawPaddles() {
        		if (topPaddleX > 0) {
             	topPaddleX -= paddleSpeed;
         	
-        }
+        	}
 
+		}
 	}
+
     } else if (keys[39]) { //Right arrow key (defaults to left if both pressed)
     	if (playerID == 'p2'){
         	if (botPaddleX + botPaddleWidth < canvas.width) {
@@ -85,10 +88,12 @@ function drawPaddles() {
         	if (topPaddleX + topPaddleWidth < canvas.width) {
             	topPaddleX += paddleSpeed;
         	
-        }
+        	}
 
+		}
+   	 }
 	}
-    }
+
 
     //Draw bottom paddle
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -102,15 +107,12 @@ function drawPaddles() {
 }
 
 function setupGame() {
+	playerID = 'p1';
     resetGame();
     setInterval(redrawCanvas, 1000/fps);
     
 }
 
-function startGame() {
-	
-	
-}
 
 function drawBall(ball) {
     var context = canvas.getContext('2d');
@@ -167,14 +169,14 @@ function moveBall(ball) {
 
     if (ball.y - ballRadius < 0) {
     	scores.p2.points ++;
-	console.log("Bottom wins");
-	resetGame();
-	testScore();
+		console.log("Bottom wins");
+		resetGame();
+		testScore();
     } else if (ball.y + ballRadius > canvas.height) {
-	console.log("Top wins");
+		console.log("Top wins");
 		scores.p1.points ++;
-	resetGame();
-	testScore();
+		resetGame();
+		testScore();
     }
 }
 
@@ -218,16 +220,24 @@ function redrawCanvas() {
 	drawBrick(brick);
     });
 }
+
+
 function testScore(){
 	scores.p1.board.textContent = scores.p1.points;
 	scores.p2.board.textContent = scores.p2.points;	
 	if (scores.p1.points >= MATCH_POINTS){
 		// game over
+		endGame();
 		
 	}else if (scores.p2.points >= MATCH_POINTS) {
-		//game over		
+		//game over
+		endGame();	
 		
 	}
+	
+}
+function endGame() {
+	//ends game
 	
 }
 
