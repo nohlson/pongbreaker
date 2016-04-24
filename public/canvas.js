@@ -239,6 +239,11 @@ function testScore(){
 function endGame() {
 	//ends game
 	
+	scores.p1.points = 0;
+	scores.p2.points = 0;
+	scores.p1.board.textContent = scores.p1.points;
+	scores.p2.board.textContent = scores.p2.points;	
+	
 }
 
 
