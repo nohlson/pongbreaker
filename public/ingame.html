@@ -20,13 +20,16 @@
     window.addEventListener("keydown", function(e) {keys[e.keyCode] = true;});
     window.addEventListener("keyup", function(e) {keys[e.keyCode] = false;});
   </script>
-  <body onLoad="setupGame()">
+  <body onLoad="setupGame()"> // here
     <div>
       <table style="width=30%">
         <tr>
 
           <th>
-            <label id = "lblScore">Left: 0 Right: 0</label>
+            <label id = "Top">Top: 0</label>
+          </th>
+          <th>
+            <label id = "Bottom">Bottom: 0</label>
           </th>
           <th>
 	    <label id = "lblGameStatus"><strong></strong></label>

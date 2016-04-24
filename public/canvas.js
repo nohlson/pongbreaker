@@ -19,7 +19,23 @@ var topPaddleX;
 var balls;
 var bricks = [];
 
-var keys = []
+var keys = [];
+
+var STARTED = false,
+MATCH_POINTS = 3,
+
+scores = {
+	p1: {
+            board: document.getElementById("Top"),
+            points: 0
+        },
+    p2: {
+            board: document.getElementById("Bottom"),
+            points: 0
+        }
+    };
+    
+    playerID;
 
 function resetGame() {
     botPaddleWidth = 35;
@@ -46,71 +62,31 @@ function resetGame() {
     generateBricks();
 }
 
-var Canvas = function() {
-    
-    _canvasObj,
-    _canvasCtx,
-    WIDTH,    
-    HEIGHT,
-    canvasMinX,
-    canvasMaxX,
-    canvasMinY,
-    canvasMaxY;
-    
-    
-    // right
-    this.player1 = {
-        x : 0,
-        y : 0
-    },
-    // left
-    this.player2 = {
-        x : 0,
-        y : 0
-    },
-    
-    _setLimits = function () {
-        canvasMinX = _canvasObj.offsetLeft;
-        canvasMaxX = canvasMinX + _canvasObj.width;
-        canvasMinY = _canvasObj.offsetTop;
-        canvasMaxY = canvasMinY + _canvasObj.height;
-    }
-    
-    function clearCanvas() {
-	_canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-    }
-    
-    
-    
-    this.draw() = function(){
-    	//Draw everything
-    	
-    	
-    }
-    
-    
-    _canvasObj = document.getElementById('playerCanvas');
-    WIDTH = _canvasObj.width;
-    HEIGHT = _canvasObj.height;
-
-    _canvasCtx = _canvasObj.getContext("2d");
-
-    this.obj = _canvasObj;
-    this.ctx = _canvasCtx;
-    
-}
-
 function drawPaddles() {
     var context = canvas.getContext('2d');
 
     //Left arrow key
     if (keys[37]) {
-        if (botPaddleX > 0) {
-            botPaddleX -= paddleSpeed;
+    	if (playerID == 'p2') {
+        	if (botPaddleX > 0) {
+            	botPaddleX -= paddleSpeed;
+        } else {
+       		if (topPaddleX > 0) {
+            	topPaddleX -= paddleSpeed;
+        	
+        }
+
 	}
     } else if (keys[39]) { //Right arrow key (defaults to left if both pressed)
-        if (botPaddleX + botPaddleWidth < canvas.width) {
-            botPaddleX += paddleSpeed;
+    	if (playerID == 'p2'){
+        	if (botPaddleX + botPaddleWidth < canvas.width) {
+            	botPaddleX += paddleSpeed;
+        } else {
+        	if (topPaddleX + topPaddleWidth < canvas.width) {
+            	topPaddleX += paddleSpeed;
+        	
+        }
+
 	}
     }
 
@@ -126,8 +102,14 @@ function drawPaddles() {
 }
 
 function setupGame() {
-    resetGame();
-    setInterval(redrawCanvas, 1000/fps);
+	resetGame();
+	setInterval(redrawCanvas, fps);
+    
+}
+
+function startGame() {
+	
+	
 }
 
 function drawBall(ball) {
@@ -184,6 +166,7 @@ function moveBall(ball) {
     }
 
     if (ball.y - ballRadius < 0) {
+    	
 	console.log("Bottom wins");
 	resetGame();
     } else if (ball.y + ballRadius > canvas.height) {
@@ -232,3 +215,7 @@ function redrawCanvas() {
 	drawBrick(brick);
     });
 }
+
+
+
+
