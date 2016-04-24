@@ -103,7 +103,7 @@ function drawPaddles() {
 
 function setupGame() {
 	resetGame();
-	setInterval(redrawCanvas, fps);
+	setInterval(redrawCanvas, 1000/fps);
     
 }
 
@@ -166,12 +166,15 @@ function moveBall(ball) {
     }
 
     if (ball.y - ballRadius < 0) {
-    	
+    	scores.p2.points ++;
 	console.log("Bottom wins");
 	resetGame();
+	testScore();
     } else if (ball.y + ballRadius > canvas.height) {
 	console.log("Top wins");
+		scores.p1.points ++;
 	resetGame();
+	testScore();
     }
 }
 
@@ -183,7 +186,7 @@ function drawBrick(brick) {
     context.lineWidth = 0.5;
     context.rect(brick.x, brick.y, brickWidth, brickHeight);
     context.stroke();
-    context.fill()
+    context.fill();
 }
 
 function generateBricks() {
@@ -214,6 +217,18 @@ function redrawCanvas() {
     bricks.forEach(function(brick) {
 	drawBrick(brick);
     });
+}
+function testScore(){
+	scores.p1.board.textContent = scores.p1.points;
+	scores.p2.board.textContent = scores.p2.points;	
+	if (scores.p1.points >= MATCH_POINTS){
+		// game over
+		
+	}else if (scores.p2.points >= MATCH_POINTS) {
+		//game over		
+		
+	}
+	
 }
 
 
