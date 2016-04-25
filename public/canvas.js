@@ -41,6 +41,7 @@ var playerID;
 var username;
 var opusername;
 var uuid;
+var pid;
 
 function resetGame() {
     botPaddleWidth = 35;
@@ -115,7 +116,7 @@ function drawPaddles() {
 }
 
 function setupGame() {
-    playerID = 'p1';
+    playerID = pid;
     document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
     resetGame();
@@ -266,6 +267,7 @@ function connect() {
     socket.on('matched', function(data) {
             opusername = data.opponent;
             uuid = data.uuid;
+            pid = data.pid;
             setupGame();
     });
 
