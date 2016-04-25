@@ -209,13 +209,13 @@ function moveBall(ball, bricks, game) {
     }
 
     if (ball.y - ballRadius < 0) {
-    	scores.p2.points ++;
+    	game.p2score++;
 		console.log("Bottom wins");
 		// resetGame();
 		testScore(game);
     } else if (ball.y + ballRadius > canvasHeight) {
 		console.log("Top wins");
-		scores.p1.points ++;
+		game.p1score++;
 		// resetGame();
 		testScore(game);
     }
