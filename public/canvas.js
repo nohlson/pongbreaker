@@ -322,6 +322,11 @@ function connect() {
         cycleHandler();
     });
 
+    socket.on('scoreupdate', function(data) {
+        scores.p1.board.textContent = data.p1score;
+        scores.p2.board.textContent = data.p2score; 
+    })
+
     console.log("Finished connect");
 }
 
