@@ -40,26 +40,29 @@ var cloudant = {
 };
 var nano = require('nano')(cloudant.url);
 var db = nano.db.use('test');
-app.get('/save_score', function(request, response) {
-  var name = request.query.name;
-  var score = request.query.score;
-
-  var scoreRecord = { 'name': name, 'score' : parseInt(score), 'date': new Date() };
-  db.insert(scoreRecord, function(err, body, header) {
-    if (!err) {       
-      response.send('Successfully added one score to the DB');
-    }
-  });
-});
-
 app.get('/highscores', function(request, response) {
-  db.view('top_Scores', 'top_scores_index', function(err, body) {
+  db.view('test', 'new-view', function(err, body) {
   if (!err) {
     var scores = [];
       body.rows.forEach(function(doc) {
         scores.push(doc.value);		      
       });
       response.send(JSON.stringify(scores));
+    }
+  });
+});
+
+
+app.get('/save_score', function(request, response) {
+  var name = request.query.name;
+  var score = request.query.score;
+  var name1 = request.query.name;
+  var score1 = request.query.score;
+
+  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1),'name': name, 'score' : parseInt(score), 'date': new Date() };
+  db.insert(scoreRecord, function(err, body, header) {
+    if (!err) {       
+      response.send('Successfully added one score to the DB');
     }
   });
 });
