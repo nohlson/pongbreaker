@@ -1,4 +1,4 @@
-/*eslint-env node*/
+/*eslint-env node, browser*/
 
 //------------------------------------------------------------------------------
 // node.js starter application for Bluemix
@@ -161,38 +161,10 @@ function addPlayerToQueue(data, socket) {
 function testScore(game) {
 	if (game.p1score >= MATCH_POINTS){
 		// game over
-		/*
-		var scoreRecord = { 'name': game.p1, 'score' : parseInt(game.p1score), 'date': new Date() };
-  		db.insert(scoreRecord, function(err, body, header) {
-    	if (!err) {       
-      		console.log("added");
-    	}
-		 });
-		scoreRecord = { 'name': game.p2, 'score' : parseInt(game.p2score), 'date': new Date() };
-  		db.insert(scoreRecord, function(err, body, header) {
-    	if (!err) {       
-      		console.log("added");
-    	}
-		 });
-		 */
 		game.gameover = 1;
 		
 	}else if (game.p2score >= MATCH_POINTS) {
 		//game over
-		/*
-		var scoreRecord = { 'name': game.p1, 'score' : parseInt(game.p1score), 'date': new Date() };
-  		db.insert(scoreRecord, function(err, body, header) {
-    	if (!err) {       
-      		console.log("added");
-    	}
-		 });
-		var scoreRecord = { 'name': game.p2, 'score' : parseInt(game.p2score), 'date': new Date() };
-  		db.insert(scoreRecord, function(err, body, header) {
-    	if (!err) {       
-      		console.log("added");
-    	}
-		 });
-		 */
 		game.gameover = 2;
 		
 	}
