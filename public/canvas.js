@@ -46,27 +46,11 @@ var pid;
 function cycleHandler() {
     //send game state to the server
     if (playerID == 1) {
-        // socket.emit('heartbeat', {
-        //     uuid:uuid,
-        //     topBallx:balls[0].x,
-        //     topBally:balls[0].y,
-        //     bottomBallx:balls[1].x,
-        //     bottomBally:balls[1].y,
-        //     topPaddlex:topPaddleX,
-        //     botPaddlex:botPaddleX});
         socket.emit('heartbeat', {
                 uuid:uuid,
                 pid:pid,
                 botPaddleX:botPaddleX});
     } else {
-        // socket.emit('heartbeat', {
-        //     uuid:uuid,
-        //     topBallx:balls[0].x,
-        //     topBally:balls[0].y,
-        //     bottomBallx:balls[1].x,
-        //     bottomBally:balls[1].y,
-        //     topPaddlex:topPaddleX,
-        //     botPaddlex:botPaddleX});
         socket.emit('heartbeat', {
                 uuid:uuid,
                 pid:pid,
@@ -237,6 +221,7 @@ function drawBrick(brick) {
     context.fill();
 }
 
+
 function generateBricks() {
     var minBrickY = 220;
     var maxBrickY = canvas.height - minBrickY;
@@ -259,11 +244,11 @@ function redrawCanvas() {
     drawPaddles();
     balls.forEach(function(ball) {
     	moveBall(ball);
-	drawBall(ball);
+	   drawBall(ball);
     });
 
     bricks.forEach(function(brick) {
-	drawBrick(brick);
+    	drawBrick(brick);
     });
     cycleHandler();
 }
@@ -294,10 +279,6 @@ function endGame() {
 	
 }
 
-function newGameData(data) {
-
-}
-
 function connect() {
     console.log("Beginning connect");
     // document.getElementById("loadingimage").style.visibility = "visible";
@@ -314,14 +295,25 @@ function connect() {
             setupGame();
     });
 
-    socket.on('update', function(data) {
-        //updates game state from server
+    socket.on('update', function(game) {
+        //updates game state from server. receives a game object
         if (pid == 1) {
-            topPaddleX = data.topPaddleX;
+            topPaddleX = game.topPaddleX; // move just opponents paddle
         } else {
-            botPaddleX = data.botPaddleX;
+            botPaddleX = game.botPaddleX; // move just opponents paddle
         }
-        redrawCanvas();
+        // redrawCanvas();
+
+        //draw paddels based on the updates above
+        drawPaddles();
+        game.balls.forEach(function(ball) {
+           drawBall(ball);
+        });
+
+        game.bricks.forEach(function(brick) {
+            drawBrick(brick);
+        });
+        cycleHandler();
     });
 
     socket.on('resetgame', function() {

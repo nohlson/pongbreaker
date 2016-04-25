@@ -56,17 +56,72 @@ var playerQueue = [];
 var games = [];
 
 
+//pertaining to game engine
+var botPaddleWidth = 35;
+var topPaddleWidth = 35;
+ 
+var ballRadius = 5;
+var paddleHeight = 10;
+ 
+var brickHeight = 10;
+var brickWidth = 30;
+
+var canvasHeight = 500
+var canvasWidth = 900
+
+var minBrickY = 220;
+var maxBrickY = canvasHeight - minBrickY;
+var MATCH_POINTS = 5;
+
+
+
+
+
+
+
+
 function checkToMatch() {
 	while (playerQueue.length > 1) {
+		//pop players out of queue
 		var p1 = playerQueue.pop();
 		var p2 = playerQueue.pop();
+
+		//generate unique id based on time
 		var uuid = new Date().valueOf();
+
+		//create two balls
+	    var topBall = {x: canvas.width/2, y: 15, xSpeed: 5, ySpeed: 5};
+	    var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 5, ySpeed: -5};
+
+	    //generate bricks
+	    var bricks = [];
+	    var currentBrickX = 0;
+	    var currentBrickY = minBrickY;
+
+	    while (currentBrickY + brickHeight <= maxBrickY) {
+			while (currentBrickX + brickWidth <= canvasWidth) {
+			    var newBrick = {x: currentBrickX, y: currentBrickY};
+			    //drawBrick(newBrick);
+			    currentBrickX += brickWidth;
+			    bricks.push(newBrick);
+			}
+			currentBrickX = 0;
+			currentBrickY += brickHeight;
+	    }
+
+
+
 		var game = {
 			p1:p1,
 			p2:p2,
 			uuid:uuid,
-			topPaddleX: 0,
-			botPaddleX: 0,
+			topPaddleX: canvas.width/2,
+			botPaddleX: canvas.width/2,
+			bricks:bricks,
+			balls:[topBall, botBall],
+			gameover:0, //0 game not over, 1:p1 wins, 2:p2 wins
+			p1score:0,
+			p2score:0,
 			cycle:0 //cycle 0: no heartbeats, cycle 1: one heartbeat, cycle 2: both heartbeats
 		};
 
@@ -91,6 +146,82 @@ function addPlayerToQueue(data, socket) {
 }
 
 
+function testScore(game) {
+	if (game.p1score >= MATCH_POINTS){
+		// game over
+		game.gameover = 1;
+		
+	}else if (game.p2score >= MATCH_POINTS) {
+		//game over
+		game.gameover = 2;
+		
+	}
+}
+
+
+function resetGame(game) {
+
+
+}
+
+function moveBall(ball, bricks, game) {
+    ball.x += ball.xSpeed;
+    ball.y += ball.ySpeed;
+
+    //Handle bottom paddle
+    if (ball.y + ballRadius > canvasHeight - paddleHeight) {
+	if (ball.x >= botPaddleX && ball.x <= botPaddleX + botPaddleWidth) {
+	    ball.y = canvasHeight - paddleHeight - ballRadius;
+	    ball.ySpeed *= -1;
+	}
+    }
+
+    //Handle right wall
+    if (ball.x + ballRadius >= canvasWidth) {
+	ball.x = canvasWidth - ballRadius;
+	ball.xSpeed *= -1;
+    }
+
+    //Handle top paddle
+    if (ball.y - ballRadius <= paddleHeight) {
+	if (ball.x >= topPaddleX && ball.x <= topPaddleX + topPaddleWidth) {
+	    ball.y = paddleHeight + ballRadius;
+	    ball.ySpeed *= -1;
+	}
+    }
+
+    //Handle left wall
+    if (ball.x - ballRadius <= 0) {
+	ball.x = ballRadius;
+	ball.xSpeed *= -1;
+    }
+
+    //Handle hitting a brick
+    for (var i = 0; i < bricks.length; i++) {
+	var brick = bricks[i];
+	if (ball.y + ballRadius >= brick.y && ball.y - ballRadius <= brick.y + brickHeight) {
+	    if (ball.x + ballRadius >= brick.x && ball.x - ballRadius <= brick.x + brickWidth) {
+		ball.ySpeed *= -1;
+		bricks.splice(i--, 1);
+		break;
+	    }
+	}
+    }
+
+    if (ball.y - ballRadius < 0) {
+    	scores.p2.points ++;
+		console.log("Bottom wins");
+		// resetGame();
+		testScore(game);
+    } else if (ball.y + ballRadius > canvasHeight) {
+		console.log("Top wins");
+		scores.p1.points ++;
+		// resetGame();
+		testScore(game);
+    }
+}
+
+
 
 io.on('connection', function(socket) {
     console.log('A user connected');
@@ -109,8 +240,17 @@ io.on('connection', function(socket) {
 				}
 				games[i].cycle++;
 				if (games[i].cycle == 2) {
-					games[i].p1.socket.emit('update', {topPaddleX:games[i].topPaddleX});
-					games[i].p2.socket.emit('update', {botPaddleX:games[i].botPaddleX});
+					//game engine
+
+					//move both balls
+					games[i].balls.forEach(function(ball) {
+						moveBall(ball, games[i].bricks, games[i]);
+					});
+
+
+					//TODO: send full game data to client
+					games[i].p1.socket.emit('update', games[i]);
+					games[i].p2.socket.emit('update', games[i]);
 					games[i].cycle = 0;
 				}
 				break;
