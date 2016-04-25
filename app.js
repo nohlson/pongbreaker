@@ -35,7 +35,22 @@ http.listen(appEnv.port, function() {
     console.log('listening on *:' + appEnv.port);
 });
 
+var cloudant = {
+	url : "https://eecdbd58-d40a-4885-ae70-8543496471cc-bluemix.cloudant.com" 		 
+};
+var nano = require('nano')(cloudant.url);
+var db = nano.db.use('test');
+app.get('/save_score', function(request, response) {
+  var name = request.query.name;
+  var score = request.query.score;
 
+  var scoreRecord = { 'name': name, 'score' : parseInt(score), 'date': new Date() };
+  db.insert(scoreRecord, function(err, body, header) {
+    if (!err) {       
+      response.send('Successfully added one score to the DB');
+    }
+  });
+});
 
 var playerQueue = [];
 var games = [];
