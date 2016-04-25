@@ -112,6 +112,7 @@ io.on('connection', function(socket) {
 				if (thisgame.cycle == 2) {
 					thisgame.p1.socket.emit('update', {topPaddleX:thisgame.topPaddleX});
 					thisgame.p2.socket.emit('update', {botPaddleX:thisgame.botPaddleX});
+					thisgame.cycle = 0;
 				}
 				break;
 			}
