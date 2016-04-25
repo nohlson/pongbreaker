@@ -90,8 +90,8 @@ function checkToMatch() {
 		var uuid = new Date().valueOf();
 
 		//create two balls
-	    var topBall = {x: canvas.width/2, y: 15, xSpeed: 5, ySpeed: 5};
-	    var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 5, ySpeed: -5};
+	    var topBall = {x: canvasWidth/2, y: 15, xSpeed: 5, ySpeed: 5};
+	    var botBall = {x: canvasWidth/2, y: canvasHeight - 15, xSpeed: 5, ySpeed: -5};
 
 	    //generate bricks
 	    var bricks = [];
@@ -115,8 +115,8 @@ function checkToMatch() {
 			p1:p1,
 			p2:p2,
 			uuid:uuid,
-			topPaddleX: canvas.width/2,
-			botPaddleX: canvas.width/2,
+			topPaddleX: canvasWidth/2,
+			botPaddleX: canvasWidth/2,
 			bricks:bricks,
 			balls:[topBall, botBall],
 			gameover:0, //0 game not over, 1:p1 wins, 2:p2 wins
