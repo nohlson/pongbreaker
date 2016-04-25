@@ -324,10 +324,10 @@ function connect() {
         redrawCanvas();
     });
 
-    socket.on('resetgame' function() {
+    socket.on('resetgame', function() {
         resetgame();
         cycleHandler();
-    })
+    });
 
     console.log("Finished connect");
 }
