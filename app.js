@@ -7,6 +7,7 @@
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
 var express = require('express');
+var async = require('async');
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -31,17 +32,52 @@ app.listen(appEnv.port, '0.0.0.0', function() {
   console.log("server starting on " + appEnv.url);
 });
 */
-
 http.listen(appEnv.port, function() {
     console.log('listening on *:' + appEnv.port);
 });
 
+
+
+
+
+var playerQueue = [];
+var games = [];
+
+
+function checkToMatch() {
+	while (playerQueue.length > 1) {
+		var p1 = playerQueue.pop();
+		var p2 = playerQueue.pop();
+		var game = {
+			p1:p1,
+			p2:p2
+		};
+
+		games.push(game);
+		console.log("New game created between " + p1.username + " and " + p2.username);
+
+	}
+	
+}
+
+function addPlayerToQueue(data, socket) {
+	console.log('Username: ' + data.user)
+	var username = data.username;
+	var socketID = socket.id;
+	var player = {
+		username:username,
+		socketID:socketID
+	};
+	playerQueue.push(player);
+	checkToMatch();
+}
+
+
+
 io.on('connection', function(socket) {
     console.log('A user connected');
-    socket.on('newuserconnect', function(data) {
-    	console.log('Username: ' + data.user)
+    socket.on('newuserconnect', function(data, socket));
 
-    });
     socket.on('disconnect', function() {
 	console.log('User disconnected');
     });

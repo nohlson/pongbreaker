@@ -2,6 +2,7 @@
 /*eslint-env node, browser*/
 
 var connecting = 0;
+var socket;
 
 
 function connect() {
@@ -10,7 +11,7 @@ function connect() {
 	    console.log("Beginning connect");
 	    document.getElementById("loadingimage").style.visibility = "visible";
 
-	    var socket = io();
+	    socket = io();
 
 	    var username = document.getElementById("username").value;
 	    socket.emit("newuserconnect", {user: username});
@@ -18,3 +19,9 @@ function connect() {
 	    console.log("Finished connect");
 	}
 }
+
+
+socket.on('matched', function() {
+	window.open("ingame.html", '_blank');
+
+});
