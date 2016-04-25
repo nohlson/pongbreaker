@@ -38,6 +38,9 @@ var scores = {
     };
     
 var playerID;
+var username;
+var opusername;
+var uuid;
 
 function resetGame() {
     botPaddleWidth = 35;
@@ -111,14 +114,12 @@ function drawPaddles() {
     context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
 }
 
-function setupGame(username, opusername, uuid) {
-    socket.on('gameinfo', function(data) {
-        playerID = 'p1';
-        document.getElementById('User1').innerHTML = data.username;
-        document.getElementById('User2').innerHTML = data.opponent;
-        resetGame();
-        setInterval(redrawCanvas, 1000/fps);
-    });
+function setupGame() {
+    playerID = 'p1';
+    document.getElementById('User1').innerHTML = username;
+    document.getElementById('User2').innerHTML = opusername;
+    resetGame();
+    setInterval(redrawCanvas, 1000/fps);
 }
 
 
@@ -253,6 +254,29 @@ function endGame() {
 	scores.p2.board.textContent = scores.p2.points;	
 	
 }
+
+var connecting = 0;
+function connect() {
+    if (!connecting) {
+        connecting = 1;
+        console.log("Beginning connect");
+        // document.getElementById("loadingimage").style.visibility = "visible";
+
+        socket = io();
+
+        username = localStorage.getItem("pbusername");
+        socket.emit("newuserconnect", {user: username});
+        socket.on('matched', function(data) {
+                opusername = data.opponent;
+                uuid = data.uuid;
+                setupGame());
+        });
+
+        console.log("Finished connect");
+    }
+}
+
+
 
 
 

@@ -16,8 +16,6 @@
         background-repeat: no-repeat;
       }
       </style>
-
-    <script src="/socket.io/socket.io.js"></script>
     <script src="index.js" type="text/javascript"></script>
   </head>
 
@@ -32,7 +30,7 @@
             <p>A combination of two of the most addicting games ever made.</p>
       	    <p>Written by Nate Ohlson, Garrett Davidson, and Noah Maxey</p>
       	    <p>Username <input type="text" id="username"><br></p>
-            <button onclick="connect()" class="btn btn-primary btn-lg">PLAY</button>
+            <button onclick="play()" class="btn btn-primary btn-lg">PLAY</button>
             <p><img id='loadingimage' src="images/load.gif" style="width:128px;height:128px;"></p>
         </td>
 
