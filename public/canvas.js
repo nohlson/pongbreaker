@@ -112,17 +112,15 @@ function drawPaddles() {
 }
 
 function setupGame(username, opusername, uuid) {
-	playerID = 'p1';
-    window.open('ingame.html', '_self');
-    document.getElementById('User1').innerHTML = username;
-    document.getElementById('User2').innerHTML = opusername;
-
-    //connecting with server
     socket = io();
-	
-    resetGame();
-    setInterval(redrawCanvas, 1000/fps);
-    
+
+    socket.on('gameinfo', function(data) {
+        playerID = 'p1';
+        document.getElementById('User1').innerHTML = data.username;
+        document.getElementById('User2').innerHTML = data.opponent;
+        resetGame();
+        setInterval(redrawCanvas, 1000/fps);
+    });
 }
 
 

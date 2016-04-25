@@ -14,9 +14,8 @@ function connect() {
 
 	    var username = document.getElementById("username").value;
 	    socket.emit("newuserconnect", {user: username});
-	    socket.on('matched', function(data) {
-	    	canvas.setupGame(username, data.opusername, data.uuid);
-
+	    socket.on('matched', function() {
+			window.open('ingame.html', '_self');
 		});
 
 	    console.log("Finished connect");

@@ -55,8 +55,10 @@ function checkToMatch() {
 		};
 
 		games.push(game);
-		p1.socket.emit('matched', {opponent:p2.opusername, uuid:uuid});
-		p2.socket.emit('matched', {opponent:p1.opusername, uuid:uuid});
+		p1.socket.emit('matched', {});
+		p1.socket.emit('matched', {});
+		p1.socket.emit('gameinfo', {username:p1.username, opponent:p2.username, uuid:uuid});
+		p2.socket.emit('gameinfo', {username:p2.username, opponent:p1.username, uuid:uuid});
 		console.log("New game created between " + p1.username + " and " + p2.username);
 
 	}
