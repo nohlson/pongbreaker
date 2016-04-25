@@ -47,14 +47,16 @@ function checkToMatch() {
 	while (playerQueue.length > 1) {
 		var p1 = playerQueue.pop();
 		var p2 = playerQueue.pop();
+		var uuid = new Date().valueOf();
 		var game = {
 			p1:p1,
 			p2:p2
+			uuid:uuid
 		};
 
 		games.push(game);
-		p1.socket.emit('matched', {opponent:p2.username});
-		p2.socket.emit('matched', {opponent:p1.username});
+		p1.socket.emit('matched', {opponent:p2.opusername, uuid:uuid});
+		p2.socket.emit('matched', {opponent:p1.opusername, uuid:uuid});
 		console.log("New game created between " + p1.username + " and " + p2.username);
 
 	}

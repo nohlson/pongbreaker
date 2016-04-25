@@ -109,8 +109,10 @@ function drawPaddles() {
     context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
 }
 
-function setupGame() {
+function setupGame(username, opusername, uuid) {
 	playerID = 'p1';
+    document.getElementById('User1').innerHTML = username;
+    document.getElementById('User2').innerHTML = opusername;
 	
     resetGame();
     setInterval(redrawCanvas, 1000/fps);
