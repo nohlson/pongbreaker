@@ -15,13 +15,12 @@ function connect() {
 
 	    var username = document.getElementById("username").value;
 	    socket.emit("newuserconnect", {user: username});
+	    socket.on('matched', function(data) {
+			window.open("ingame.html", '_blank');
+		});
 
 	    console.log("Finished connect");
 	}
 }
 
 
-socket.on('matched', function() {
-	window.open("ingame.html", '_blank');
-
-});
