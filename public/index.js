@@ -16,7 +16,7 @@ function connect() {
 	    var username = document.getElementById("username").value;
 	    socket.emit("newuserconnect", {user: username});
 	    socket.on('matched', function(data) {
-			window.open("ingame.html", '_blank');
+			window.open("ingame.html", '_self');
 		});
 
 	    console.log("Finished connect");
