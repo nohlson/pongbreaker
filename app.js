@@ -79,7 +79,9 @@ function addPlayerToQueue(data, socket) {
 
 io.on('connection', function(socket) {
     console.log('A user connected');
-    socket.on('newuserconnect', addPlayerToQueue(data, socket));
+    socket.on('newuserconnect', function(data) {
+    	addPlayerToQueue(data, socket);
+    });
 
     socket.on('disconnect', function() {
 	console.log('User disconnected');
