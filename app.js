@@ -102,31 +102,31 @@ io.on('connection', function(socket) {
 
 		for (var i = 0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
-				var thisgame = games[i];
 				if (data.pid == 1) {
-					thisgame.botPaddleX = data.botPaddleX;
+					games[i].botPaddleX = data.botPaddleX;
 				} else {
-					thisgame.topPaddleX = data.topPaddleX;
+					games[i].topPaddleX = data.topPaddleX;
 				}
-				thisgame.cycle++;
-				if (thisgame.cycle == 2) {
-					thisgame.p1.socket.emit('update', {topPaddleX:thisgame.topPaddleX});
-					thisgame.p2.socket.emit('update', {botPaddleX:thisgame.botPaddleX});
-					thisgame.cycle = 0;
+				games[i].cycle++;
+				if (games[i].cycle == 2) {
+					games[i].p1.socket.emit('update', {topPaddleX:games[i].topPaddleX});
+					games[i].p2.socket.emit('update', {botPaddleX:games[i].botPaddleX});
+					games[i].cycle = 0;
 				}
 				break;
 			}
 		}
 	});
 
-	socket.on('balloob', function(data) {
+	socket.on('endgame', function(data) {
 		for (var i =0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
-				var thisgame = games[i];
-				thisgame.p1.socket.emit('resetgame', {});
-				thisgame.p2.socket.emit('resetgame', {});
-				thisgame.cycle = 0;
+				var games[i] = games[i];
+				games[i].p1.socket.emit('resetgame', {});
+				games[i].p2.socket.emit('resetgame', {});
+				games[i].cycle = 0;
 			}
+			break;
 		}
 
 	})

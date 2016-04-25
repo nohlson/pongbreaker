@@ -290,7 +290,7 @@ function endGame() {
 	scores.p2.points = 0;
 	scores.p1.board.textContent = scores.p1.points;
 	scores.p2.board.textContent = scores.p2.points;
-    socket.emit('balloob', {uuid:uuid});
+    socket.emit('endgame', {uuid:uuid});
 	
 }
 
@@ -307,6 +307,7 @@ function connect() {
     username = localStorage.getItem("pbusername");
     socket.emit("newuserconnect", {user: username});
     socket.on('matched', function(data) {
+            document.getElementById('lblRoundInfo').innerHTML = "PongBreaker"
             opusername = data.opponent;
             uuid = data.uuid;
             pid = data.pid;
