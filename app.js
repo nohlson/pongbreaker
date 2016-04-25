@@ -119,6 +119,18 @@ io.on('connection', function(socket) {
 		}
 	});
 
+	socket.on('balloob', function(data) {
+		for (var i =0; i < games.length; i++) {
+			if (data.uuid == games[i].uuid) {
+				var thisgame = games[i];
+				thisgame.p1.socket.emit('resetgame', {});
+				thisgame.p2.socket.emit('resetgame', {});
+				thisgame.cycle = 0;
+			}
+		}
+
+	})
+
     socket.on('disconnect', function() {
 	console.log('User disconnected');
     });

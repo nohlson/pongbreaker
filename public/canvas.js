@@ -289,7 +289,8 @@ function endGame() {
 	scores.p1.points = 0;
 	scores.p2.points = 0;
 	scores.p1.board.textContent = scores.p1.points;
-	scores.p2.board.textContent = scores.p2.points;	
+	scores.p2.board.textContent = scores.p2.points;
+    socket.emit('balloob', {uuid:uuid});
 	
 }
 
@@ -321,6 +322,11 @@ function connect() {
         }
         redrawCanvas();
     });
+
+    socket.on('resetgame' function() {
+        resetgame();
+        cycleHandler();
+    })
 
     console.log("Finished connect");
 }
