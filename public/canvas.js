@@ -58,7 +58,7 @@ function cycleHandler() {
                 uuid:uuid,
                 pid:pid,
                 botPaddleX:botPaddleX});
-        })
+        });
     } else {
         // socket.emit('heartbeat', {
         //     uuid:uuid,
