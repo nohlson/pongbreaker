@@ -50,7 +50,7 @@ function checkToMatch() {
 		var uuid = new Date().valueOf();
 		var game = {
 			p1:p1,
-			p2:p2
+			p2:p2,
 			uuid:uuid
 		};
 
