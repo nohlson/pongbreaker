@@ -184,7 +184,7 @@ function moveBall(ball, bricks, game) {
 
     //Handle top paddle
     if (ball.y - ballRadius <= paddleHeight) {
-	if (ball.x >= topPaddleX && ball.x <= topPaddleX + topPaddleWidth) {
+	if (ball.x >= game.topPaddleX && ball.x <= game.topPaddleX + topPaddleWidth) {
 	    ball.y = paddleHeight + ballRadius;
 	    ball.ySpeed *= -1;
 	}
