@@ -255,25 +255,21 @@ function endGame() {
 	
 }
 
-var connecting = 0;
 function connect() {
-    if (!connecting) {
-        connecting = 1;
-        console.log("Beginning connect");
-        // document.getElementById("loadingimage").style.visibility = "visible";
+    console.log("Beginning connect");
+    // document.getElementById("loadingimage").style.visibility = "visible";
 
-        socket = io();
+    socket = io();
 
-        username = localStorage.getItem("pbusername");
-        socket.emit("newuserconnect", {user: username});
-        socket.on('matched', function(data) {
-                opusername = data.opponent;
-                uuid = data.uuid;
-                setupGame());
-        });
+    username = localStorage.getItem("pbusername");
+    socket.emit("newuserconnect", {user: username});
+    socket.on('matched', function(data) {
+            opusername = data.opponent;
+            uuid = data.uuid;
+            setupGame();
+    });
 
-        console.log("Finished connect");
-    }
+    console.log("Finished connect");
 }
 
 
