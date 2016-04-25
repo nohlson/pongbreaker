@@ -63,7 +63,7 @@ function checkToMatch() {
 
 function addPlayerToQueue(data, socket) {
 	console.log('Username: ' + data.user)
-	var username = data.username;
+	var username = data.user;
 	var player = {
 		username:username,
 		socket:socket
