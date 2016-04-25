@@ -6,3 +6,6 @@ function play() {
     localStorage.setItem("pbusername", username);
     window.open('ingame.html', '_self');
 }
+function scoreboard(){
+	window.open('scoreboard.html', '_self');
+}
