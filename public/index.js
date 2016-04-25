@@ -4,9 +4,6 @@
 var connecting = 0;
 var socket;
 
-var canvas = require('./canvas.js');
-
-
 function connect() {
 	if (!connecting) {
 		connecting = 1;
