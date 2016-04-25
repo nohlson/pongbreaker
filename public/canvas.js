@@ -63,31 +63,31 @@ function cycleHandler() {
 
 
 
-function resetGame() {
-    botPaddleWidth = 35;
-    topPaddleWidth = 35;
+// function resetGame() {
+//     botPaddleWidth = 35;
+//     topPaddleWidth = 35;
 
-    ballRadius = 5;
-    paddleHeight = 10;
+//     ballRadius = 5;
+//     paddleHeight = 10;
 
-    brickHeight = 10;
-    brickWidth = 30;
+//     brickHeight = 10;
+//     brickWidth = 30;
 
 
-    botPaddleX = canvas.width/2;
-    topPaddleX = canvas.width/2;
+//     botPaddleX = canvas.width/2;
+//     topPaddleX = canvas.width/2;
 
-    bricks = [];
-    keys = [];
+//     bricks = [];
+//     keys = [];
 
-    paddleSpeed = 8;
+//     paddleSpeed = 8;
     
-    var topBall = {x: canvas.width/2, y: 15, xSpeed: 5, ySpeed: 5};
-    var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 5, ySpeed: -5};
-    balls = [topBall, botBall];
-    generateBricks();
+//     var topBall = {x: canvas.width/2, y: 15, xSpeed: 5, ySpeed: 5};
+//     var botBall = {x: canvas.width/2, y: canvas.height - 15, xSpeed: 5, ySpeed: -5};
+//     balls = [topBall, botBall];
+//     generateBricks();
     
-}
+// }
 
 function drawPaddles() {
     var context = canvas.getContext('2d');
@@ -154,62 +154,62 @@ function drawBall(ball) {
     context.fill();
 }
 
-function moveBall(ball) {
-    ball.x += ball.xSpeed;
-    ball.y += ball.ySpeed;
+// function moveBall(ball) {
+//     ball.x += ball.xSpeed;
+//     ball.y += ball.ySpeed;
 
-    //Handle bottom paddle
-    if (ball.y + ballRadius > canvas.height - paddleHeight) {
-	if (ball.x >= botPaddleX && ball.x <= botPaddleX + botPaddleWidth) {
-	    ball.y = canvas.height - paddleHeight - ballRadius;
-	    ball.ySpeed *= -1;
-	}
-    }
+//     //Handle bottom paddle
+//     if (ball.y + ballRadius > canvas.height - paddleHeight) {
+// 	if (ball.x >= botPaddleX && ball.x <= botPaddleX + botPaddleWidth) {
+// 	    ball.y = canvas.height - paddleHeight - ballRadius;
+// 	    ball.ySpeed *= -1;
+// 	}
+//     }
 
-    //Handle right wall
-    if (ball.x + ballRadius >= canvas.width) {
-	ball.x = canvas.width - ballRadius;
-	ball.xSpeed *= -1;
-    }
+//     //Handle right wall
+//     if (ball.x + ballRadius >= canvas.width) {
+// 	ball.x = canvas.width - ballRadius;
+// 	ball.xSpeed *= -1;
+//     }
 
-    //Handle top paddle
-    if (ball.y - ballRadius <= paddleHeight) {
-	if (ball.x >= topPaddleX && ball.x <= topPaddleX + topPaddleWidth) {
-	    ball.y = paddleHeight + ballRadius;
-	    ball.ySpeed *= -1;
-	}
-    }
+//     //Handle top paddle
+//     if (ball.y - ballRadius <= paddleHeight) {
+// 	if (ball.x >= topPaddleX && ball.x <= topPaddleX + topPaddleWidth) {
+// 	    ball.y = paddleHeight + ballRadius;
+// 	    ball.ySpeed *= -1;
+// 	}
+//     }
 
-    //Handle left wall
-    if (ball.x - ballRadius <= 0) {
-	ball.x = ballRadius;
-	ball.xSpeed *= -1;
-    }
+//     //Handle left wall
+//     if (ball.x - ballRadius <= 0) {
+// 	ball.x = ballRadius;
+// 	ball.xSpeed *= -1;
+//     }
 
-    //Handle hitting a brick
-    for (var i = 0; i < bricks.length; i++) {
-	var brick = bricks[i];
-	if (ball.y + ballRadius >= brick.y && ball.y - ballRadius <= brick.y + brickHeight) {
-	    if (ball.x + ballRadius >= brick.x && ball.x - ballRadius <= brick.x + brickWidth) {
-		ball.ySpeed *= -1;
-		bricks.splice(i--, 1);
-		break;
-	    }
-	}
-    }
+//     //Handle hitting a brick
+//     for (var i = 0; i < bricks.length; i++) {
+// 	var brick = bricks[i];
+// 	if (ball.y + ballRadius >= brick.y && ball.y - ballRadius <= brick.y + brickHeight) {
+// 	    if (ball.x + ballRadius >= brick.x && ball.x - ballRadius <= brick.x + brickWidth) {
+// 		ball.ySpeed *= -1;
+// 		bricks.splice(i--, 1);
+// 		break;
+// 	    }
+// 	}
+//     }
 
-    if (ball.y - ballRadius < 0) {
-    	scores.p2.points ++;
-		console.log("Bottom wins");
-		resetGame();
-		testScore();
-    } else if (ball.y + ballRadius > canvas.height) {
-		console.log("Top wins");
-		scores.p1.points ++;
-		resetGame();
-		testScore();
-    }
-}
+//     if (ball.y - ballRadius < 0) {
+//     	scores.p2.points ++;
+// 		console.log("Bottom wins");
+// 		resetGame();
+// 		testScore();
+//     } else if (ball.y + ballRadius > canvas.height) {
+// 		console.log("Top wins");
+// 		scores.p1.points ++;
+// 		resetGame();
+// 		testScore();
+//     }
+// }
 
 function drawBrick(brick) {
     var context = canvas.getContext('2d');
@@ -223,62 +223,62 @@ function drawBrick(brick) {
 }
 
 
-function generateBricks() {
-    var minBrickY = 220;
-    var maxBrickY = canvas.height - minBrickY;
+// function generateBricks() {
+//     var minBrickY = 220;
+//     var maxBrickY = canvas.height - minBrickY;
 
-    var currentBrickX = 0;
-    var currentBrickY = minBrickY;
-    while (currentBrickY + brickHeight <= maxBrickY) {
-	while (currentBrickX + brickWidth <= canvas.width) {
-	    var newBrick = {x: currentBrickX, y: currentBrickY};
-	    drawBrick(newBrick);
-	    currentBrickX += brickWidth;
-	    bricks.push(newBrick);
-	}
-	currentBrickX = 0;
-	currentBrickY += brickHeight;
-    }
-}
+//     var currentBrickX = 0;
+//     var currentBrickY = minBrickY;
+//     while (currentBrickY + brickHeight <= maxBrickY) {
+// 	while (currentBrickX + brickWidth <= canvas.width) {
+// 	    var newBrick = {x: currentBrickX, y: currentBrickY};
+// 	    drawBrick(newBrick);
+// 	    currentBrickX += brickWidth;
+// 	    bricks.push(newBrick);
+// 	}
+// 	currentBrickX = 0;
+// 	currentBrickY += brickHeight;
+//     }
+// }
 
-function redrawCanvas() {
-    drawPaddles();
-    balls.forEach(function(ball) {
-    	moveBall(ball);
-	   drawBall(ball);
-    });
+// function redrawCanvas() {
+//     drawPaddles();
+//     balls.forEach(function(ball) {
+//     	moveBall(ball);
+// 	   drawBall(ball);
+//     });
 
-    bricks.forEach(function(brick) {
-    	drawBrick(brick);
-    });
-    cycleHandler();
-}
+//     bricks.forEach(function(brick) {
+//     	drawBrick(brick);
+//     });
+//     cycleHandler();
+// }
 
 
-function testScore(){
-	scores.p1.board.textContent = scores.p1.points;
-	scores.p2.board.textContent = scores.p2.points;	
-	if (scores.p1.points >= MATCH_POINTS){
-		// game over
-		endGame();
+// function testScore(){
+// 	scores.p1.board.textContent = scores.p1.points;
+// 	scores.p2.board.textContent = scores.p2.points;	
+// 	if (scores.p1.points >= MATCH_POINTS){
+// 		// game over
+// 		endGame();
 		
-	}else if (scores.p2.points >= MATCH_POINTS) {
-		//game over
-		endGame();	
+// 	}else if (scores.p2.points >= MATCH_POINTS) {
+// 		//game over
+// 		endGame();	
 		
-	}
+// 	}
 	
-}
-function endGame() {
-	//ends game
+// }
+// function endGame() {
+// 	//ends game
 	
-	scores.p1.points = 0;
-	scores.p2.points = 0;
-	scores.p1.board.textContent = scores.p1.points;
-	scores.p2.board.textContent = scores.p2.points;
-    socket.emit('endgame', {uuid:uuid});
+// 	scores.p1.points = 0;
+// 	scores.p2.points = 0;
+// 	scores.p1.board.textContent = scores.p1.points;
+// 	scores.p2.board.textContent = scores.p2.points;
+//     socket.emit('endgame', {uuid:uuid});
 	
-}
+// }
 
 function connect() {
     console.log("Beginning connect");
