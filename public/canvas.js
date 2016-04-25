@@ -45,6 +45,7 @@ var pid;
 
 function cycleHandler() {
     //send game state to the server
+    console.log("Sending heartbeat");
     if (playerID == 1) {
         socket.emit('heartbeat', {
                 uuid:uuid,
