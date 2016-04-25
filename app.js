@@ -54,6 +54,10 @@ function checkToMatch() {
 		};
 
 		games.push(game);
+		var sock1 = p1.socketID;
+		var sock2 = p2.socketID;
+		sock1.emit('matched', {opponent:p2.username});
+		sock2.emit('matched', {opponent:p1.username});
 		console.log("New game created between " + p1.username + " and " + p2.username);
 
 	}
