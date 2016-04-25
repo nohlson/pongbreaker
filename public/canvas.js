@@ -112,8 +112,6 @@ function drawPaddles() {
 }
 
 function setupGame(username, opusername, uuid) {
-    socket = io();
-
     socket.on('gameinfo', function(data) {
         playerID = 'p1';
         document.getElementById('User1').innerHTML = data.username;
