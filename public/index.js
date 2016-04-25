@@ -4,7 +4,7 @@
 var connecting = 0;
 var socket;
 
-var canvas = require('canvas.js');
+var canvas = require('canvas');
 
 
 function connect() {
@@ -19,7 +19,7 @@ function connect() {
 	    socket.emit("newuserconnect", {user: username});
 	    socket.on('matched', function(data) {
 			window.open("ingame.html", '_self');
-	    	canvas.setupGame(username, data.opusername, data.uuid);
+	    	canvas.setupGame(username, data.opusername, data.uuid, socket);
 
 		});
 

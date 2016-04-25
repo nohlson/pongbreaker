@@ -109,7 +109,7 @@ function drawPaddles() {
     context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
 }
 
-function setupGame(username, opusername, uuid) {
+function setupGame(username, opusername, uuid, socket) {
 	playerID = 'p1';
     document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
