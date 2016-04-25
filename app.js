@@ -121,7 +121,6 @@ io.on('connection', function(socket) {
 	socket.on('endgame', function(data) {
 		for (var i =0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
-				var games[i] = games[i];
 				games[i].p1.socket.emit('resetgame', {});
 				games[i].p2.socket.emit('resetgame', {});
 				games[i].cycle = 0;
