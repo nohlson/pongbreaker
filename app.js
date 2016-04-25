@@ -149,6 +149,7 @@ function addPlayerToQueue(data, socket) {
 function testScore(game) {
 	if (game.p1score >= MATCH_POINTS){
 		// game over
+		/*
 		var scoreRecord = { 'name': game.p1, 'score' : parseInt(game.p1score), 'date': new Date() };
   		db.insert(scoreRecord, function(err, body, header) {
     	if (!err) {       
@@ -161,10 +162,12 @@ function testScore(game) {
       		console.log("added");
     	}
 		 });
+		 */
 		game.gameover = 1;
 		
 	}else if (game.p2score >= MATCH_POINTS) {
 		//game over
+		/*
 		var scoreRecord = { 'name': game.p1, 'score' : parseInt(game.p1score), 'date': new Date() };
   		db.insert(scoreRecord, function(err, body, header) {
     	if (!err) {       
@@ -177,6 +180,7 @@ function testScore(game) {
       		console.log("added");
     	}
 		 });
+		 */
 		game.gameover = 2;
 		
 	}
