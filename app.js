@@ -86,7 +86,24 @@ var maxBrickY = canvasHeight - minBrickY;
 var MATCH_POINTS = 5;
 
 
+function generateBricks() {
+	var bricks = [];
+    var currentBrickX = 0;
+    var currentBrickY = minBrickY;
 
+    while (currentBrickY + brickHeight <= maxBrickY) {
+		while (currentBrickX + brickWidth <= canvasWidth) {
+		    var newBrick = {x: currentBrickX, y: currentBrickY};
+		    //drawBrick(newBrick);
+		    currentBrickX += brickWidth;
+		    bricks.push(newBrick);
+		}
+		currentBrickX = 0;
+		currentBrickY += brickHeight;
+    }
+    return bricks;
+
+}
 
 
 
@@ -106,23 +123,8 @@ function checkToMatch() {
 	    var botBall = {x: canvasWidth/2, y: canvasHeight - 15, xSpeed: 5, ySpeed: -5};
 
 	    //generate bricks
-	    var bricks = [];
-	    var currentBrickX = 0;
-	    var currentBrickY = minBrickY;
-
-	    while (currentBrickY + brickHeight <= maxBrickY) {
-			while (currentBrickX + brickWidth <= canvasWidth) {
-			    var newBrick = {x: currentBrickX, y: currentBrickY};
-			    //drawBrick(newBrick);
-			    currentBrickX += brickWidth;
-			    bricks.push(newBrick);
-			}
-			currentBrickX = 0;
-			currentBrickY += brickHeight;
-	    }
-
-
-
+	    var bricks = generateBricks();
+	  
 		var game = {
 			p1:p1,
 			p2:p2,
@@ -200,8 +202,21 @@ function testScore(game) {
 
 
 function resetGame(game) {
+	//resetpaddles
+	game.botPaddleX = canvasWidth/2;
+	game.topPaddleX = canvasWidth/2;
 
+	//reset bricks
+	game.bricks = generateBricks();
 
+	//reset balls
+	var topBall = {x: canvasWidth/2, y: 15, xSpeed: 5, ySpeed: 5};
+    var botBall = {x: canvasWidth/2, y: canvasHeight - 15, xSpeed: 5, ySpeed: -5};
+    game.balls = [topBall, botBall];
+
+    //send update
+    games[i].p1.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX});
+	games[i].p2.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, botPaddleX:games[i].botPaddleX});
 }
 
 function moveBall(ball, bricks, game) {
@@ -251,17 +266,17 @@ function moveBall(ball, bricks, game) {
     if (ball.y - ballRadius < 0) {
     	game.p2score++;
 		console.log("Bottom wins");
-		// resetGame();
 		testScore(game);
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    game.p2.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
+		resetGame(game);
     } else if (ball.y + ballRadius > canvasHeight) {
 		console.log("Top wins");
 		game.p1score++;
-		// resetGame();
 		testScore(game);
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    game.p2.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
+		resetGame(game);
     }
 }
 
