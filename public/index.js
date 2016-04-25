@@ -4,7 +4,7 @@
 var connecting = 0;
 var socket;
 
-var canvas = require('canvas');
+var canvas = require('./canvas.js');
 
 
 function connect() {
