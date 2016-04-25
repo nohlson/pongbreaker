@@ -53,10 +53,8 @@ function checkToMatch() {
 		};
 
 		games.push(game);
-		var sock1 = p1.socketID;
-		var sock2 = p2.socketID;
-		sock1.emit('matched', {opponent:p2.username});
-		sock2.emit('matched', {opponent:p1.username});
+		p1.socket.emit('matched', {opponent:p2.username});
+		p2.socket.emit('matched', {opponent:p1.username});
 		console.log("New game created between " + p1.username + " and " + p2.username);
 
 	}
@@ -66,10 +64,9 @@ function checkToMatch() {
 function addPlayerToQueue(data, socket) {
 	console.log('Username: ' + data.user)
 	var username = data.username;
-	var socketID = socket.id;
 	var player = {
 		username:username,
-		socketID:socketID
+		socket:socket
 	};
 	playerQueue.push(player);
 	checkToMatch();
