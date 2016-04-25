@@ -43,6 +43,42 @@ var opusername;
 var uuid;
 var pid;
 
+function cycleHandler() {
+    //send game state to the server
+    if (playerID == 1) {
+        // socket.emit('heartbeat', {
+        //     uuid:uuid,
+        //     topBallx:balls[0].x,
+        //     topBally:balls[0].y,
+        //     bottomBallx:balls[1].x,
+        //     bottomBally:balls[1].y,
+        //     topPaddlex:topPaddleX,
+        //     botPaddlex:botPaddleX});
+        socket.emit('heartbeat', {
+                uuid:uuid,
+                pid:pid,
+                botPaddleX:botPaddleX});
+        })
+    } else {
+        // socket.emit('heartbeat', {
+        //     uuid:uuid,
+        //     topBallx:balls[0].x,
+        //     topBally:balls[0].y,
+        //     bottomBallx:balls[1].x,
+        //     bottomBally:balls[1].y,
+        //     topPaddlex:topPaddleX,
+        //     botPaddlex:botPaddleX});
+        socket.emit('heartbeat', {
+                uuid:uuid,
+                pid:pid,
+                topPaddleX:topPaddleX});
+
+    }
+}
+
+
+
+
 function resetGame() {
     botPaddleWidth = 35;
     topPaddleWidth = 35;
@@ -120,7 +156,7 @@ function setupGame() {
     document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
     resetGame();
-    setInterval(redrawCanvas, 1000/fps);
+    setInterval(cycleHandler, 1000/fps);
 }
 
 
@@ -256,6 +292,10 @@ function endGame() {
 	
 }
 
+function newGameData(data) {
+
+}
+
 function connect() {
     console.log("Beginning connect");
     // document.getElementById("loadingimage").style.visibility = "visible";
@@ -269,6 +309,16 @@ function connect() {
             uuid = data.uuid;
             pid = data.pid;
             setupGame();
+    });
+
+    socket.on('update', function(data) {
+        //updates game state from server
+        if (pid == 1) {
+            topPaddleX = data.topPaddleX;
+        } else {
+            botPaddleX = data.botPaddleX;
+        }
+        redrawCanvas();
     });
 
     console.log("Finished connect");

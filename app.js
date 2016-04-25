@@ -87,4 +87,20 @@ io.on('connection', function(socket) {
     });
 });
 
+io.on('heartbeat', function(data) {
+	//lookup game id, update game status, return
+	for (var i = 0; i < games.length; i++) {
+		if (data.uuid == games[i].uuid) {
+			if (data.pid == 1) {
+				games[i].p2.socket.emit('update', {botPaddleX:data.botPaddleX});
+			} else {
+				games[i].p1.socket.emit('update', {topPaddleX:data.topPaddleX});
+			}
+			break;
+		}
+	}
+
+
+});
+
 
