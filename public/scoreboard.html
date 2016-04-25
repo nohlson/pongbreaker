@@ -37,7 +37,7 @@ function populateTable() {
   while(table.rows.length > 2) {
   	table.deleteRow(2);
 	}
- 	$.get("/hiscores", function (data) {
+ 	$.get("/highscores", function (data) {
  	console.log("Sending heartbeat");
     var hiscores = JSON.parse(data);
     hiscores.forEach(function (hiscore) {
