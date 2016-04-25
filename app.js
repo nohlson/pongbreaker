@@ -250,8 +250,8 @@ io.on('connection', function(socket) {
 
 
 					//TODO: send full game data to client
-					games[i].p1.socket.emit('update', {balls:balls, bricks:bricks, topPaddleX:topPaddleX});
-					games[i].p2.socket.emit('update', {balls:balls, bricks:bricks, botPaddleX:botPaddleX});
+					games[i].p1.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX});
+					games[i].p2.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, botPaddleX:games[i].botPaddleX});
 					games[i].cycle = 0;
 				}
 				break;
