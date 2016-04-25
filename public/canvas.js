@@ -74,7 +74,7 @@ function drawPaddles() {
 
     //Left arrow key
     if (keys[37]) {
-    	if (playerID == 'p2') {
+    	if (playerID == 1) {
         	if (botPaddleX > 0) {
             	botPaddleX -= paddleSpeed;
         	}
@@ -88,7 +88,7 @@ function drawPaddles() {
 	
 
     } else if (keys[39]) { //Right arrow key (defaults to left if both pressed)
-    	if (playerID == 'p2'){
+    	if (playerID == 1){
         	if (botPaddleX + botPaddleWidth < canvas.width) {
             	botPaddleX += paddleSpeed;
         	}
