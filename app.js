@@ -52,6 +52,18 @@ app.get('/save_score', function(request, response) {
   });
 });
 
+app.get('/highscores', function(request, response) {
+  db.view('top_Scores', 'top_scores_index', function(err, body) {
+  if (!err) {
+    var scores = [];
+      body.rows.forEach(function(doc) {
+        scores.push(doc.value);		      
+      });
+      response.send(JSON.stringify(scores));
+    }
+  });
+});
+
 var playerQueue = [];
 var games = [];
 
