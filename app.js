@@ -219,6 +219,7 @@ function moveBall(ball, bricks, game) {
 		// resetGame();
 		testScore(game);
     }
+    socket.emit('scoreupdate', {p1score:game[i].p1score, p2score:game[i].p2score})
 }
 
 
@@ -259,17 +260,6 @@ io.on('connection', function(socket) {
 		}
 	});
 
-	socket.on('endgame', function(data) {
-		for (var i =0; i < games.length; i++) {
-			if (data.uuid == games[i].uuid) {
-				games[i].p1.socket.emit('resetgame', {});
-				games[i].p2.socket.emit('resetgame', {});
-				games[i].cycle = 0;
-			}
-			break;
-		}
-
-	})
 
     socket.on('disconnect', function() {
 	console.log('User disconnected');
