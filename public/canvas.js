@@ -110,7 +110,8 @@ function drawPaddles() {
 }
 
 function setupGame() {
-	playerID = 'p2';
+	playerID = 'p1';
+	
     resetGame();
     setInterval(redrawCanvas, 1000/fps);
     
