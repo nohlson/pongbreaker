@@ -24,6 +24,8 @@ var keys = [];
 var STARTED = false;
 var MATCH_POINTS = 3;
 
+var socket;
+
 var scores = {
 	p1: {
             board: document.getElementById("Top"),
@@ -109,10 +111,14 @@ function drawPaddles() {
     context.fillRect(topPaddleX, 0, topPaddleWidth, paddleHeight);
 }
 
-function setupGame(username, opusername, uuid, socket) {
+function setupGame(username, opusername, uuid) {
 	playerID = 'p1';
+    window.open('ingame.html', '_self');
     document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
+
+    //connecting with server
+    socket = io();
 	
     resetGame();
     setInterval(redrawCanvas, 1000/fps);
