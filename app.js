@@ -37,8 +37,6 @@ http.listen(appEnv.port, function() {
 
 
 
-
-
 var playerQueue = [];
 var games = [];
 
@@ -51,7 +49,10 @@ function checkToMatch() {
 		var game = {
 			p1:p1,
 			p2:p2,
-			uuid:uuid
+			uuid:uuid,
+			topPaddleX: 0,
+			botPaddleX: 0,
+			cycle:0 //cycle 0: no heartbeats, cycle 1: one heartbeat, cycle 2: both heartbeats
 		};
 
 		games.push(game);
@@ -83,12 +84,19 @@ io.on('connection', function(socket) {
     });
     socket.on('heartbeat', function(data) {
 		//lookup game id, update game status, return
+
 		for (var i = 0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
+				var thisgame = games[i];
 				if (data.pid == 1) {
-					games[i].p2.socket.emit('update', {botPaddleX:data.botPaddleX});
+					thisgame.botPaddleX = data.botPaddleX;
 				} else {
-					games[i].p1.socket.emit('update', {topPaddleX:data.topPaddleX});
+					thisgame.topPaddleX = data.topPaddleX;
+				}
+				thisgame.cycle++;
+				if (thisgame.cycle == 2) {
+					thisgame.p1.socket.emit('update', {topPaddleX:thisgame.topPaddleX});
+					thisgame.p2.socket.emit('update', {botPaddleX:thisgame.botPaddleX});
 				}
 				break;
 			}

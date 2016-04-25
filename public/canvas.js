@@ -155,7 +155,8 @@ function setupGame() {
     document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
     resetGame();
-    setInterval(cycleHandler, 1000/fps);
+    // setInterval(cycleHandler, 1000/fps);
+    cycleHandler();
 }
 
 
@@ -264,6 +265,7 @@ function redrawCanvas() {
     bricks.forEach(function(brick) {
 	drawBrick(brick);
     });
+    cycleHandler();
 }
 
 
