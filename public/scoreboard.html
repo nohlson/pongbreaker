@@ -41,6 +41,8 @@ function populateTable() {
  	console.log("Sending heartbeat");
     var hiscores = JSON.parse(data);
     hiscores.forEach(function (hiscore) {
+    	var dateObj = new Date(hiscore.date);
+  		var formattedDate = dateObj.toLocaleDateString() + " " + dateObj.toLocaleTimeString();
     	var row = table.insertRow(2);
    		var cell1 = row.insertCell(0);
     	var 	cell2 = row.insertCell(1);
@@ -52,7 +54,7 @@ function populateTable() {
     	cell2.innerHTML = hiscore.score;
         cell3.innerHTML = hiscore.name1;
     	cell4.innerHTML = hiscore.score1;
-    	cell5.innerHTML = hiscore.date;
+    	cell5.innerHTML = formattedDate;
 			
     });
   });	

@@ -265,10 +265,12 @@ function moveBall(ball, bricks, game) {
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    game.p2.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    if (game.gameover == 0){
-			resetGame(game);
+			// resetGame(game);
 		} else{
-			savescores(game);
+			game.p1.socket.emit('gameover', {p1score:game.p1score, p2score:game.p2score});
+			game.p2.socket.emit('scoresave', {p1score:game.p1score, p2score:game.p2score});
 		}
+		resetGame(game);
     } else if (ball.y + ballRadius > canvasHeight) {
 		console.log("Top wins");
 		game.p1score++;
@@ -276,16 +278,16 @@ function moveBall(ball, bricks, game) {
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    game.p2.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    if (game.gameover == 0){
-			resetGame(game);
+			// resetGame(game);
 		} else{
-			savescores(game);
+			game.p1.socket.emit('scoresave', {p1score:game.p1score, p2score:game.p2score});
+			game.p2.socket.emit('gameover', {p1score:game.p1score, p2score:game.p2score});
 		}
+		resetGame(game);
 
     }
 }
-function savescores(game) {
 
-}
 
 
 
