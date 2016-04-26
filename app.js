@@ -257,6 +257,7 @@ function moveBall(ball, bricks, game) {
 	    if (game.gameover == 0){
 			// resetGame(game);
 		} else{
+			game.p1.socket.emit('gameover', {p1score:game.p1score, p2score:game.p2score});
 			game.p2.socket.emit('scoresave', {p1score:game.p1score, p2score:game.p2score});
 		}
 		resetGame(game);
@@ -270,14 +271,13 @@ function moveBall(ball, bricks, game) {
 			// resetGame(game);
 		} else{
 			game.p1.socket.emit('scoresave', {p1score:game.p1score, p2score:game.p2score});
+			game.p2.socket.emit('gameover', {p1score:game.p1score, p2score:game.p2score});
 		}
 		resetGame(game);
 
     }
 }
-function savescores(game) {
 
-}
 
 
 

@@ -331,6 +331,10 @@ function connect() {
     		window.location.replace("/index.html"); // Go to hiscore page
   		});
     });
+    socket.on('gameover', function(data) {   
+    	window.location.replace("/index.html"); // Go to hiscore page
+
+    });
 
     socket.on('start', function(game) {
         console.log("Start command recieved, received init gameboard.");
