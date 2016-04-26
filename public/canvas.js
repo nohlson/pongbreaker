@@ -325,12 +325,12 @@ function connect() {
         scores.p2.board.textContent = data.p2score; 
     });
 
-    socket.on('start', function(data) {
+    socket.on('start', function(game) {
         console.log("Start command recieved, received init gameboard.");
-        topPaddleX = data.topPaddleX;
-        botPaddleX = data.botPaddleX;
-        bricks = data.bricks;
-        balls = data.balls;
+        topPaddleX = game.topPaddleX;
+        botPaddleX = game.botPaddleX;
+        bricks = game.bricks;
+        balls = game.balls;
         drawPaddles();
         game.balls.forEach(function(ball) {
            drawBall(ball);
