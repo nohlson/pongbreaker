@@ -257,7 +257,7 @@ function moveBall(ball, bricks, game) {
 	    if (game.gameover == 0){
 			resetGame(game);
 		} else{
-			savescores(game);
+			game.p2.socket.emit('scoresave', {p1score:game.p1score, p2score:game.p2score});
 		}
     } else if (ball.y + ballRadius > canvasHeight) {
 		console.log("Top wins");
@@ -268,7 +268,7 @@ function moveBall(ball, bricks, game) {
 	    if (game.gameover == 0){
 			resetGame(game);
 		} else{
-			savescores(game);
+			game.p1.socket.emit('scoresave', {p1score:game.p1score, p2score:game.p2score});
 		}
 
     }

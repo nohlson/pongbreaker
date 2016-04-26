@@ -1,4 +1,4 @@
-/*eslint-env browser */
+/*eslint-env browser, jquery*/
 var canvas = document.getElementById("playerCanvas");
 
 var botPaddleWidth;
@@ -324,6 +324,12 @@ function connect() {
     socket.on('scoreupdate', function(data) {
         scores.p1.board.textContent = data.p1score;
         scores.p2.board.textContent = data.p2score; 
+    });
+    
+    socket.on('scoresave', function(data) {
+		$.ajax( { url: "/save_score?name=" + username + "&score=" + data.p1score + "&name1=" + opusername + "&score1=" + data.p2score , cache : false }).done(function() {    
+    		window.location.replace("/index.html"); // Go to hiscore page
+  		});
     });
 
     socket.on('start', function(game) {
