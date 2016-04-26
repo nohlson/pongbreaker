@@ -266,16 +266,8 @@ function moveBall(ball, bricks, game) {
     }
 }
 function savescores(game) {
-  var name2 = game.p1;
-  var score = game.p1score;
-  var name1 = game.p2;
-  var score1 = game.p2score;
-
-  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1, 10),'name': name2, 'score' : parseInt(score, 10), 'date': new Date() };
-  db.insert(scoreRecord, function(err) {
-    if (!err) {       
-      console.log('Successfully added one score to the DB');
-    }
+  $.ajax( { url: "/save_score?name=" + game.p1 + "&score=" + game.p1score + "&name1=" + game.p2 + "&score1=" + game.p2score , cache : false }).done(function() {    
+    //window.location.replace("/index.html"); // Go to hiscore page
   });
 }
 
