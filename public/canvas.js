@@ -328,11 +328,17 @@ function connect() {
     
     socket.on('scoresave', function(data) {
 		$.ajax( { url: "/save_score?name=" + username + "&score=" + data.p1score + "&name1=" + opusername + "&score1=" + data.p2score , cache : false }).done(function() {    
-    		window.location.replace("/index.html"); // Go to hiscore page
+    	setTimeout(function(){ 
+    		window.location.replace("/scoreboard.html"); // Go to hiscore page
+        
+    	}, 3000); 
   		});
     });
-    socket.on('gameover', function(data) {   
-    	window.location.replace("/index.html"); // Go to hiscore page
+    socket.on('gameover', function(data) {
+    	setTimeout(function(){ 
+    		window.location.replace("/scoreboard.html"); // Go to hiscore page
+        
+    	}, 3000); 
 
     });
 
