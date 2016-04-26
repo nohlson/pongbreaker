@@ -89,6 +89,8 @@ var minBrickY = 220;
 var maxBrickY = canvasHeight - minBrickY;
 var MATCH_POINTS = 5;
 
+var waittime = 50;
+
 
 function generateBricks() {
 	var bricks = [];
@@ -142,7 +144,8 @@ function checkToMatch() {
 			gameover:0, //0 game not over, 1:p1 wins, 2:p2 wins
 			p1score:0,
 			p2score:0,
-			cycle:0 //cycle 0: no heartbeats, cycle 1: one heartbeat, cycle 2: both heartbeats
+			cycle:0, //cycle 0: no heartbeats, cycle 1: one heartbeat, cycle 2: both heartbeats
+			lastupdate: new Date.valueOf()
 		};
 
 		games.push(game);
@@ -299,6 +302,7 @@ io.on('connection', function(socket) {
     socket.on('heartbeat', function(data) {
 		//lookup game id, update game status, return
 
+
 		for (var i = 0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
 				if (data.pid == 1) {
@@ -317,12 +321,20 @@ io.on('connection', function(socket) {
 
 
 					//TODO: send full game data to client
+					var currenttime = new Date().valueOf();
+					var waitamount;
+					if ((currenttime - games[i].lastupdate) > waittime) {
+						waitamount = 0;
+					} else {
+						waitamount = waittime - (currenttime - games[i].lastupdate);
+					}
 					setTimeout(function() {
 						games[i].p1.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX});
 						games[i].p2.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, botPaddleX:games[i].botPaddleX});
-
-					}, 50);
-					games[i].cycle = 0;
+						games[i].lastupdate = new Date().valueOf();
+						games[i].cycle = 0;
+					}, waitamount);
+					
 				}
 				break;
 			}
