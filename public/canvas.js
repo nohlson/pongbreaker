@@ -135,7 +135,14 @@ function drawPaddles() {
 }
 
 function setupGame() {
-    document.getElementById('User2').innerHTML = opusername;
+    if (pid == 1) {
+        document.getElementById('User1').innerHTML = username;
+        document.getElementById('User2').innerHTML = opusername;
+    } else {
+        document.getElementById('User1').innerHTML = opusername;
+        document.getElementById('User2').innerHTML = username;
+    }
+    
     console.log("Sending initgame...");
     socket.emit('initgame', {uuid:uuid, pid:pid});
 }
@@ -283,7 +290,7 @@ function connect() {
     socket = io();
 
     username = localStorage.getItem("pbusername");
-    document.getElementById('User1').innerHTML = username;
+    document.getElementById('User1').innerHTML = "Waiting on opponent...";
     document.getElementById('User2').innerHTML = "Waiting on opponent...";
     socket.emit("newuserconnect", {user: username});
     socket.on('matched', function(data) {
