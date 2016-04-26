@@ -41,7 +41,7 @@ var cloudant = {
 var nano = require('nano')(cloudant.url);
 var db = nano.db.use('test');
 
-app.get('/highscores', function(response) {
+app.get('/highscores', function(request, response) {
   db.view('test', 'new-view', function(err, body) {
   if (!err) {
     var scores = [];
