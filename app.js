@@ -333,7 +333,7 @@ io.on('connection', function(socket) {
 						games[i].p2.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, botPaddleX:games[i].botPaddleX});
 						games[i].lastupdate = new Date().valueOf();
 						games[i].cycle = 0;
-					}, 50);
+					}, waitamount);
 					
 				}
 				break;
