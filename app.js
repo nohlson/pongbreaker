@@ -266,8 +266,16 @@ function moveBall(ball, bricks, game) {
     }
 }
 function savescores(game) {
-  $.ajax( { url: "/save_score?name=" + game.p1 + "&score=" + game.p1score + "&name1=" + game.p2 + "&score1=" + game.p2score , cache : false }).done(function() {    
-    //window.location.replace("/index.html"); // Go to hiscore page
+  var name2 = request.query.name;
+  var score = request.query.score;
+  var name1 = request.query.name1;
+  var score1 = request.query.score1;
+
+  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1, 10),'name': name2, 'score' : parseInt(score, 10), 'date': new Date() };
+  db.insert(scoreRecord, function(err) {
+    if (!err) {       
+      response.send('Successfully added one score to the DB');
+    }
   });
 }
 

@@ -27,7 +27,7 @@ function myFunction() {
     cell3.innerHTML = "NEW CELL2";
 }
 function saveScore() {
-  $.ajax( { url: "/save_score?name=" + "wow" + "&score=" + "10", cache : false }).done(function() {    
+  $.ajax( { url: "/save_score?name=" + "game.p1" + "&score=" + "1" + "&name1=" + "game.p2" + "&score1=" + "1" , cache : false }).done(function() {    
     window.location.replace("/index.html"); // Go to hiscore page
   });
 }
@@ -58,4 +58,3 @@ function populateTable() {
   });	
 }
 </script>
-
