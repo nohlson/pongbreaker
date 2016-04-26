@@ -140,8 +140,7 @@ function setupGame() {
     document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
     resetGame();
-    // setInterval(cycleHandler, 1000/fps);
-    cycleHandler();
+    socket.emit('initgame', {uuid:uuid, pid:pid});
 }
 
 
@@ -325,7 +324,16 @@ function connect() {
     socket.on('scoreupdate', function(data) {
         scores.p1.board.textContent = data.p1score;
         scores.p2.board.textContent = data.p2score; 
-    })
+    });
+
+    socket.on('start', function(data) {
+        topPaddleX = data.topPaddleX;
+        botPaddleX = data.botPaddleX;
+        bricks = data.bricks;
+        balls = data.balls;
+
+        cycleHandler();
+    });
 
     console.log("Finished connect");
 }
