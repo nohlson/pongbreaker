@@ -5,12 +5,12 @@ var botPaddleWidth;
 var topPaddleWidth;
 
 var fps = 30;
-var ballRadius;
-var paddleHeight;
-var paddleSpeed;
+var ballRadius = 5;
+var paddleHeight = 10;
+var paddleSpeed = 8;
 
-var brickHeight;
-var brickWidth;
+var brickHeight = 10;
+var brickWidth = 30;
 
 
 var botPaddleX;
