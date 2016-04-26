@@ -294,8 +294,10 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('initgame', function(data) {
+		console.log("Initgame recieved...");
 		for (var i = 0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
+					console.log("Sending init gameboard.");
 					games[i].p1.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX});
 					games[i].p2.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX});
 			}

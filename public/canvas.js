@@ -37,16 +37,15 @@ var scores = {
         }
     };
     
-var playerID;
+var pid;
 var username;
 var opusername;
 var uuid;
-var pid;
 
 function cycleHandler() {
     //send game state to the server
     console.log("Sending heartbeat");
-    if (playerID == 1) {
+    if (pid == 1) {
         socket.emit('heartbeat', {
                 uuid:uuid,
                 pid:pid,
@@ -94,7 +93,7 @@ function drawPaddles() {
 
     //Left arrow key
     if (keys[37]) {
-    	if (playerID == 1) {
+    	if (pid == 1) {
         	if (botPaddleX > 0) {
             	botPaddleX -= paddleSpeed;
         	}
@@ -108,7 +107,7 @@ function drawPaddles() {
 	
 
     } else if (keys[39]) { //Right arrow key (defaults to left if both pressed)
-    	if (playerID == 1){
+    	if (pid == 1){
         	if (botPaddleX + botPaddleWidth < canvas.width) {
             	botPaddleX += paddleSpeed;
         	}
@@ -136,9 +135,8 @@ function drawPaddles() {
 }
 
 function setupGame() {
-    playerID = pid;
-    document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
+    console.log("Sending initgame...");
     socket.emit('initgame', {uuid:uuid, pid:pid});
 }
 
@@ -285,6 +283,8 @@ function connect() {
     socket = io();
 
     username = localStorage.getItem("pbusername");
+    document.getElementById('User1').innerHTML = username;
+    document.getElementById('User2').innerHTML = "Waiting on opponent...";
     socket.emit("newuserconnect", {user: username});
     socket.on('matched', function(data) {
             document.getElementById('lblRoundInfo').innerHTML = "PongBreaker"
@@ -326,11 +326,19 @@ function connect() {
     });
 
     socket.on('start', function(data) {
+        console.log("Start command recieved, received init gameboard.");
         topPaddleX = data.topPaddleX;
         botPaddleX = data.botPaddleX;
         bricks = data.bricks;
         balls = data.balls;
+        drawPaddles();
+        game.balls.forEach(function(ball) {
+           drawBall(ball);
+        });
 
+        game.bricks.forEach(function(brick) {
+            drawBrick(brick);
+        });
         cycleHandler();
     });
 
