@@ -40,6 +40,7 @@ var cloudant = {
 };
 var nano = require('nano')(cloudant.url);
 var db = nano.db.use('test');
+
 app.get('/highscores', function(response) {
   db.view('test', 'new-view', function(err, body) {
   if (!err) {
@@ -273,17 +274,7 @@ function moveBall(ball, bricks, game) {
     }
 }
 function savescores(game) {
-  var name2 = game.p1;
-  var score = game.p1score;
-  var name1 = game.p2;
-  var score1 = game.p2score;
 
-  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1, 10),'name': name2, 'score' : parseInt(score, 10), 'date': new Date() };
-  db.insert(scoreRecord, function(err) {
-    if (!err) {       
-      console.log('Successfully added one score to the DB');
-    }
-  });
 }
 
 
@@ -326,12 +317,15 @@ io.on('connection', function(socket) {
 	socket.on('initgame', function(data) {
 		console.log("Initgame recieved...");
 		for (var i = 0; i < games.length; i++) {
-			if (data.uuid == games[i].uuid) {
+		    if (data.uuid == games[i].uuid) {
+			//Only send init on receiving from p1 to prevent duplicate inits
+			if (data.pid == 1) {
 					console.log("Sending init gameboard.");
 			    games[i].p1.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX, topPaddleWidth:games[i].topPaddleWidth, botPaddleWidth:games[i].botPaddleWidth});
 			    games[i].p2.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX, topPaddleWidth:games[i].topPaddleWidth, botPaddleWidth:games[i].botPaddleWidth});
-					break;
+			    break;
 			}
+		    }
 		}
 	});
 

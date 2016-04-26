@@ -89,7 +89,6 @@ function cycleHandler() {
 // }
 
 function drawPaddles() {
-    console.log("Drawing paddles..");
     var context = canvas.getContext('2d');
 
     //Left arrow key
@@ -317,6 +316,7 @@ function connect() {
     });
 
     socket.on('resetgame', function() {
+	consol.log("Resetting game");
         resetgame();
         cycleHandler();
     });
@@ -342,6 +342,7 @@ function connect() {
         game.bricks.forEach(function(brick) {
             drawBrick(brick);
         });
+	console.log("Starting game");
         cycleHandler();
     });
 
