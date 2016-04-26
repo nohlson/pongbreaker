@@ -139,7 +139,6 @@ function setupGame() {
     playerID = pid;
     document.getElementById('User1').innerHTML = username;
     document.getElementById('User2').innerHTML = opusername;
-    resetGame();
     socket.emit('initgame', {uuid:uuid, pid:pid});
 }
 
