@@ -332,6 +332,8 @@ function connect() {
         botPaddleX = game.botPaddleX;
         bricks = game.bricks;
         balls = game.balls;
+	topPaddleWidth = game.topPaddleWidth;
+	botPaddleWidth = game.botPaddleWidth;
         drawPaddles();
         game.balls.forEach(function(ball) {
            drawBall(ball);

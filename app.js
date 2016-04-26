@@ -133,7 +133,9 @@ function checkToMatch() {
 			p2:p2,
 			uuid:uuid,
 			topPaddleX: canvasWidth/2,
-			botPaddleX: canvasWidth/2,
+		    botPaddleX: canvasWidth/2,
+		    botPaddleWidth: botPaddleWidth,
+		    topPaddleWidth: topPaddleWidth,
 			bricks:bricks,
 			balls:[topBall, botBall],
 			gameover:0, //0 game not over, 1:p1 wins, 2:p2 wins
@@ -319,8 +321,8 @@ io.on('connection', function(socket) {
 		for (var i = 0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
 					console.log("Sending init gameboard.");
-					games[i].p1.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX});
-					games[i].p2.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX});
+			    games[i].p1.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX, topPaddleWidth:games[i].topPaddleWidth, botPaddleWidth:games[i].botPaddleWidth});
+			    games[i].p2.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX, topPaddleWidth:games[i].topPaddleWidth, botPaddleWidth:games[i].botPaddleWidth});
 					break;
 			}
 		}
