@@ -40,7 +40,7 @@ var cloudant = {
 };
 var nano = require('nano')(cloudant.url);
 var db = nano.db.use('test');
-app.get('/highscores', function(request, response) {
+app.get('/highscores', function(response) {
   db.view('test', 'new-view', function(err, body) {
   if (!err) {
     var scores = [];
@@ -54,13 +54,13 @@ app.get('/highscores', function(request, response) {
 
 
 app.get('/save_score', function(request, response) {
-  var name = request.query.name;
+  var name2 = request.query.name;
   var score = request.query.score;
   var name1 = request.query.name1;
   var score1 = request.query.score1;
 
-  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1),'name': name, 'score' : parseInt(score), 'date': new Date() };
-  db.insert(scoreRecord, function(err, body, header) {
+  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1, 10),'name': name2, 'score' : parseInt(score, 10), 'date': new Date() };
+  db.insert(scoreRecord, function(err) {
     if (!err) {       
       response.send('Successfully added one score to the DB');
     }
@@ -266,16 +266,8 @@ function moveBall(ball, bricks, game) {
     }
 }
 function savescores(game) {
-  var name = game.p1;
-  var score = game.p1score;
-  var name1 = game.p2;
-  var score1 = game.p2score;
-
-  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1),'name': name, 'score' : parseInt(score), 'date': new Date() };
-  db.insert(scoreRecord, function(err, body, header) {
-    if (!err) {       
-      console.log('Successfully added one score to the DB');
-    }
+  $.ajax( { url: "/save_score?name=" + game.p1 + "&score=" + game.p1score + "&name1=" + game.p2 + "&score1=" + game.p2score , cache : false }).done(function() {    
+    //window.location.replace("/index.html"); // Go to hiscore page
   });
 }
 
