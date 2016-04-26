@@ -56,8 +56,8 @@ app.get('/highscores', function(request, response) {
 app.get('/save_score', function(request, response) {
   var name = request.query.name;
   var score = request.query.score;
-  var name1 = request.query.name;
-  var score1 = request.query.score;
+  var name1 = request.query.name1;
+  var score1 = request.query.score1;
 
   var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1),'name': name, 'score' : parseInt(score), 'date': new Date() };
   db.insert(scoreRecord, function(err, body, header) {
