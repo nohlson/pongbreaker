@@ -293,7 +293,7 @@ io.on('connection', function(socket) {
 		}
 	});
 
-	socket.on('initgame', function() {
+	socket.on('initgame', function(data) {
 		for (var i = 0; i < games.length; i++) {
 			if (data.uuid == games[i].uuid) {
 					games[i].p1.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX});
