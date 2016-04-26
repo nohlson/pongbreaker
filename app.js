@@ -262,7 +262,7 @@ function moveBall(ball, bricks, game) {
     }
 
     if (ball.y - ballRadius < 0) {
-    	game.p2score++;
+    	game.p1score++;
 		console.log("Bottom wins");
 		testScore(game);
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
@@ -276,7 +276,7 @@ function moveBall(ball, bricks, game) {
 		resetGame(game);
     } else if (ball.y + ballRadius > canvasHeight) {
 		console.log("Top wins");
-		game.p1score++;
+		game.p2score++;
 		testScore(game);
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    game.p2.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
