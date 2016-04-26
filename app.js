@@ -190,8 +190,8 @@ function resetGame(game) {
     game.balls = [topBall, botBall];
 
     //send update
-    game.p1.socket.emit('update', {balls:game.balls, bricks:game.bricks, topPaddleX:game.topPaddleX});
-	game.p2.socket.emit('update', {balls:game.balls, bricks:game.bricks, botPaddleX:game.botPaddleX});
+    //game.p1.socket.emit('update', {balls:game.balls, bricks:game.bricks, topPaddleX:game.topPaddleX});
+	//game.p2.socket.emit('update', {balls:game.balls, bricks:game.bricks, botPaddleX:game.botPaddleX});
 }
 
 function moveBall(ball, bricks, game) {
