@@ -205,11 +205,16 @@ function moveBall(ball, bricks, game) {
     //Handle bottom paddle
     if (ball.y + ballRadius > canvasHeight - paddleHeight) {
 		if (ball.x >= game.botPaddleX && ball.x <= game.botPaddleX + botPaddleWidth) {
+		    console.log("Collision with bottom paddle");
 		    ball.y = canvasHeight - paddleHeight - ballRadius;
 		    var reflectNum = ball.x - game.botPaddleX;
-		    var theta = (-1 * reflectNum * (Math.pi/botPaddleWidth)) - Math.pi;
-		    ball.ySpeed = Math.cos(theta) * speedMag;
-		    ball.xSpeed = Math.sin(theta) * speedMag;
+		    var theta = (reflectNum * (Math.PI/(topPaddleWidth*2))) - (3*Math.PI/4);
+		    ball.xSpeed = Math.cos(theta) * speedMag;
+		    ball.ySpeed = Math.sin(theta) * speedMag;
+		    console.log("Reflect num: " + reflectNum);
+		    console.log("theta: " + theta);
+		    console.log("New y speed: " + ball.ySpeed);
+		    console.log("New x speed: " + ball.xSpeed);
 		}
     }
 
@@ -222,11 +227,16 @@ function moveBall(ball, bricks, game) {
     //Handle top paddle
     if (ball.y - ballRadius <= paddleHeight) {
 		if (ball.x >= game.topPaddleX && ball.x <= game.topPaddleX + topPaddleWidth) {
+		    console.log("Collision with top paddle");
 		    ball.y = paddleHeight + ballRadius;
 		    var reflectNum = ball.x - game.topPaddleX;
-		    var theta = (-1 * reflectNum * (Math.pi/topPaddleWidth)) - Math.pi;
-		    ball.ySpeed = Math.cos(theta) * speedMag;
-		    ball.xSpeed = Math.sin(theta) * speedMag;
+		    var theta = (-1 * reflectNum * (Math.PI/(botPaddleWidth*2))) - (5*Math.PI/4);
+		    ball.xSpeed = Math.cos(theta) * speedMag;
+		    ball.ySpeed = Math.sin(theta) * speedMag;
+		    console.log("Reflect num: " + reflectNum);
+		    console.log("theta: " + theta);
+		    console.log("New y speed: " + ball.ySpeed);
+		    console.log("New x speed: " + ball.xSpeed);
 		}
     }
 
@@ -309,7 +319,7 @@ io.on('connection', function(socket) {
 						games[i].p1.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX});
 						games[i].p2.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, botPaddleX:games[i].botPaddleX});
 
-					}, 100);
+					}, 50);
 					games[i].cycle = 0;
 				}
 				break;
