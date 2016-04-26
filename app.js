@@ -319,12 +319,15 @@ io.on('connection', function(socket) {
 	socket.on('initgame', function(data) {
 		console.log("Initgame recieved...");
 		for (var i = 0; i < games.length; i++) {
-			if (data.uuid == games[i].uuid) {
+		    if (data.uuid == games[i].uuid) {
+			//Only send init on receiving from p1 to prevent duplicate inits
+			if (data.pid == 1) {
 					console.log("Sending init gameboard.");
 			    games[i].p1.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX, topPaddleWidth:games[i].topPaddleWidth, botPaddleWidth:games[i].botPaddleWidth});
 			    games[i].p2.socket.emit('start', {balls:games[i].balls, bricks:games[i].bricks, topPaddleX:games[i].topPaddleX, botPaddleX:games[i].botPaddleX, topPaddleWidth:games[i].topPaddleWidth, botPaddleWidth:games[i].botPaddleWidth});
-					break;
+			    break;
 			}
+		    }
 		}
 	});
 
