@@ -199,13 +199,17 @@ function resetGame(game) {
 function moveBall(ball, bricks, game) {
     ball.x += ball.xSpeed;
     ball.y += ball.ySpeed;
+    var speedMag = Math.sqrt(Math.pow(ball.xSpeed, 2) + Math.pow(ball.ySpeed, 2));
 
     //Handle bottom paddle
     if (ball.y + ballRadius > canvasHeight - paddleHeight) {
-	if (ball.x >= game.botPaddleX && ball.x <= game.botPaddleX + botPaddleWidth) {
-	    ball.y = canvasHeight - paddleHeight - ballRadius;
-	    ball.ySpeed *= -1;
-	}
+		if (ball.x >= game.botPaddleX && ball.x <= game.botPaddleX + botPaddleWidth) {
+		    ball.y = canvasHeight - paddleHeight - ballRadius;
+		    var reflectNum = ball.x - game.botPaddleX;
+		    var theta = (-1 * reflectNum * (Math.pi/botPaddleWidth)) - Math.pi;
+		    ball.ySpeed = Math.cos(theta) * speedMag;
+		    ball.xSpeed = Math.sin(theta) * speedMag;
+		}
     }
 
     //Handle right wall
@@ -216,10 +220,13 @@ function moveBall(ball, bricks, game) {
 
     //Handle top paddle
     if (ball.y - ballRadius <= paddleHeight) {
-	if (ball.x >= game.topPaddleX && ball.x <= game.topPaddleX + topPaddleWidth) {
-	    ball.y = paddleHeight + ballRadius;
-	    ball.ySpeed *= -1;
-	}
+		if (ball.x >= game.topPaddleX && ball.x <= game.topPaddleX + topPaddleWidth) {
+		    ball.y = paddleHeight + ballRadius;
+		    var reflectNum = ball.x - game.topPaddleX;
+		    var theta = (-1 * reflectNum * (Math.pi/topPaddleWidth)) - Math.pi;
+		    ball.ySpeed = Math.cos(theta) * speedMag;
+		    ball.xSpeed = Math.sin(theta) * speedMag;
+		}
     }
 
     //Handle left wall
