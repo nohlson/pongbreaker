@@ -244,15 +244,37 @@ function moveBall(ball, bricks, game) {
 		testScore(game);
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    game.p2.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
-		resetGame(game);
+	    if (game.gameover == 0){
+			resetGame(game);
+		} else{
+			savescores(game);
+		}
     } else if (ball.y + ballRadius > canvasHeight) {
 		console.log("Top wins");
 		game.p1score++;
 		testScore(game);
 	    game.p1.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
 	    game.p2.socket.emit('scoreupdate', {p1score:game.p1score, p2score:game.p2score});
-		resetGame(game);
+	    if (game.gameover == 0){
+			resetGame(game);
+		} else{
+			savescores(game);
+		}
+
     }
+}
+function savescores(game) {
+  var name = game.p1;
+  var score = game.p1score;
+  var name1 = game.p2;
+  var score1 = game.p2score;
+
+  var scoreRecord = { 'name1': name1, 'score1' : parseInt(score1),'name': name, 'score' : parseInt(score), 'date': new Date() };
+  db.insert(scoreRecord, function(err, body, header) {
+    if (!err) {       
+      console.log('Successfully added one score to the DB');
+    }
+  });
 }
 
 
