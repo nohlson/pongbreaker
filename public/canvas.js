@@ -89,6 +89,7 @@ function cycleHandler() {
 // }
 
 function drawPaddles() {
+    console.log("Drawing paddles..");
     var context = canvas.getContext('2d');
 
     //Left arrow key
