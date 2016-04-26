@@ -145,7 +145,7 @@ function checkToMatch() {
 			p1score:0,
 			p2score:0,
 			cycle:0, //cycle 0: no heartbeats, cycle 1: one heartbeat, cycle 2: both heartbeats
-			lastupdate: new Date.valueOf()
+			lastupdate: new Date().valueOf()
 		};
 
 		games.push(game);
@@ -333,7 +333,7 @@ io.on('connection', function(socket) {
 						games[i].p2.socket.emit('update', {balls:games[i].balls, bricks:games[i].bricks, botPaddleX:games[i].botPaddleX});
 						games[i].lastupdate = new Date().valueOf();
 						games[i].cycle = 0;
-					}, waitamount);
+					}, 50);
 					
 				}
 				break;
